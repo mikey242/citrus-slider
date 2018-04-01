@@ -5,20 +5,34 @@ var sliderObjects = []
 // CREATE SLIDER OBJECTS
 for (var i = 0; i < sliders.length; i++) {
   var slides = sliders[i].getElementsByClassName('slide-wrap')
-  var indicators = sliders[i].getElementsByClassName('slide-indicator')
   var arrows = sliders[i].getElementsByClassName('slide-arrow')
   var num = slides.length
   var duration = (sliders[i].dataset.duration.length ? sliders[i].dataset.duration : 5000)
-  var slider = {slider: sliders[i], paused: false, slideIndex: 0, slides: slides, indicators: indicators, arrows: arrows, num: num, height: 'auto', duration: duration}
+  var slider = {slider: sliders[i], paused: false, slideIndex: 0, slides: slides, arrows: arrows, num: num, height: 'auto', duration: duration}
   sliderObjects[i] = slider
   sliderInit(sliderObjects[i])
   autoSlide(sliderObjects[i])
 }
 
 function sliderInit (e) {
+  console.log(e)
   // SET HEIGHT
   e.height = 0
+  // SET FIRST SLIDE AS CURRENT
+  e.slides[0].classList.add('current-slide')
+  e.indicators = {}
   for (let i = 0; i < e.num; i++) {
+    // CREATE INDICATORS
+    var indicator = document.createElement("SPAN");
+    if (i===0) {
+      indicator.setAttribute("class","slide-indicator current-indicator")
+    } else {
+      indicator.setAttribute("class","slide-indicator")
+    }
+    indicator.setAttribute("data-slide",i+1)
+    e.slider.children[1].appendChild(indicator)
+    e.indicators[i] = indicator
+    // CALCULATE HEIGHT BASED ON TEXT
     let textHeight = e.slides[i].getElementsByClassName('slide-text')[0].offsetHeight
     if (e.height < textHeight) {
       e.height = textHeight
