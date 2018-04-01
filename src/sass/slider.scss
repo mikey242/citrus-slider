@@ -4,7 +4,7 @@
     z-index: 0;
     position: relative; // When activated prevents slider from taking up entire space of container
     a {
-        color: $white;
+        color: #fff;
     }
     .slide-arrow {
         position: absolute;
@@ -47,7 +47,7 @@
         content: '';
         position: absolute;
         top: 50%;
-        background: $white;
+        background: #fff;
         border-radius: 10px;
         width: calc(100% - 2px);
         height: 14px;
@@ -64,7 +64,7 @@
     .slide-indicator {
         width: 14px;
         height: 14px;
-        background: $white;
+        background: #fff;
         border-radius: 50%;
         display: inline-block;
         position: relative;
@@ -128,7 +128,7 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    color: $white;
+    color: #fff;
     z-index: 1;
     line-height: 1.5;
     & > p {
