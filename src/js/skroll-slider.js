@@ -22,6 +22,7 @@ function sliderInit (e) {
   e.slides[0].classList.add('current-slide')
   e.indicators = {}
   for (let i = 0; i < e.num; i++) {
+    e.slides[i].setAttribute('data-slide', i)
     // CREATE INDICATORS
     var indicator = document.createElement("SPAN");
     if (i===0) {
@@ -29,7 +30,7 @@ function sliderInit (e) {
     } else {
       indicator.setAttribute("class","slide-indicator")
     }
-    indicator.setAttribute("data-slide",i+1)
+    indicator.setAttribute("data-slide",i)
     e.slider.children[1].appendChild(indicator)
     e.indicators[i] = indicator
     // CALCULATE HEIGHT BASED ON TEXT
@@ -108,7 +109,7 @@ function sliderChange (e) {
     if (e.num) { e.indicators[e.slideIndex].classList.add('current-indicator') }
 
     if (e.slider.classList.contains('pan')) {
-      e.slider.getElementsByClassName('slider')[0].style.transform = 'translateX(-' + e.slideIndex + '00vw)'
+      e.slider.getElementsByClassName('slides')[0].style.transform = 'translateX(-' + e.slideIndex + '00vw)'
     }
 
     e.intervalPrevAnim = setTimeout(function () {
