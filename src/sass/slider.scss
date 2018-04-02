@@ -259,10 +259,6 @@
 
 //PAN SLIDER
 .slider-wrap.pan {
-    .next-slide {
-        // opacity: 0;
-        // z-index: 0;
-    }
     .prev-slide {
         animation: pan-out-left ease-out 1s forwards;
     }
