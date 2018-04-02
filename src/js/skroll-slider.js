@@ -108,10 +108,6 @@ function sliderChange (e) {
     e.slides[e.slideIndex].classList.add('current-slide')
     if (e.num) { e.indicators[e.slideIndex].classList.add('current-indicator') }
 
-    if (e.slider.classList.contains('pan')) {
-      e.slider.getElementsByClassName('slides')[0].style.transform = 'translateX(-' + e.slideIndex + '00vw)'
-    }
-
     e.intervalPrevAnim = setTimeout(function () {
       for (var i = 0; i < e.num; i++) {
         e.slides[i].classList.remove('prev-anim')

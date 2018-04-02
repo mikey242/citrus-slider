@@ -172,21 +172,19 @@
 
 //PAN SLIDER
 .slider-wrap.pan {
-    .slide-text {
-        opacity: 0;
-        transform: translate(-50%, -45%);
-        transition: all 1s ease 1.5s;
-    }
-    .current-slide .slide-text {
+    .next-slide {
         opacity: 1;
-        transform: translate(-50%, -50%);
+        z-index: 0;
     }
-    // position: relative;
-    .slider {
-        position: absolute;
+    .prev-slide {
+        animation: pan-out 1s forwards;
+        z-index: 1;
+        opacity: 1;
     }
-    .slide-wrap {
-        position: relative;
+    .current-slide {
+        animation: pan-in 1s forwards;
+        z-index: 1;
+        opacity: 1;
     }
 }
 
@@ -196,12 +194,12 @@
         z-index: 1;
         opacity: 1;
     }
-    .prev-anim {
+    .prev-slide {
         opacity: 0;
         z-index: 2;
         transition: opacity 1s ease;
     }
-    .slider {
+    .slides {
         position: absolute;
     }
 }
@@ -262,11 +260,33 @@
 .slider-wrap.full-page {
     z-index: -1;
     position: absolute;
-    .slider {
+    .slides {
         filter: brightness(.4) blur(0);
     }
     .slide-indicators, .slide-arrow {
         display: none;
+    }
+}
+
+@keyframes pan-in {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes pan-out {
+    99% {
+        transform: translateX(-100%);
+        opacity: 1;
+        z-index: 1;
+    }
+    100% {
+        transform: translateX(0%);
+        opacity: 0;
+        z-index: 1;
     }
 }
 
