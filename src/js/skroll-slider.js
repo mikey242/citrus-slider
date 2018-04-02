@@ -71,6 +71,9 @@ function sliderInit (e) {
 }
 
 function sliderChange (e) {
+  if (e.slider.classList.contains('animating')) {
+    break;
+  }
   e.prev = e.slider.getElementsByClassName('current-slide')[0]
 
   // CALCULATE SLIDE INDEX
@@ -96,13 +99,17 @@ function sliderChange (e) {
       e.slides[i].classList.remove('current-slide', 'prev-slide', 'next-slide')
       if (e.num) { e.indicators[i].classList.remove('current-indicator') }
     }
+    // add direction class
     if (e.prevSlideIndex < e.slideIndex) {
       e.slider.classList.add('left')
     } else {
       e.slider.classList.add('right')
     }
+
+    e.slider.classList.add('animating')
+
     // add previous slide
-    e.prev.classList.add('prev-slide', 'prev-anim')
+    e.prev.classList.add('prev-slide')
 
     if (e.slideIndex === e.num - 1) {
       e.slides[0].classList.add('next-slide')
@@ -116,10 +123,8 @@ function sliderChange (e) {
     if (e.num) { e.indicators[e.slideIndex].classList.add('current-indicator') }
 
     e.intervalPrevAnim = setTimeout(function () {
-      for (var i = 0; i < e.num; i++) {
-        e.slides[i].classList.remove('prev-anim')
-      }
-    }, 2000)
+      e.slider.classList.remove('animating')
+    }, 1000)
     if (e.paused === false) {
       autoSlide(e)
     }

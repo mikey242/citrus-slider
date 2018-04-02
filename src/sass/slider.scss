@@ -114,7 +114,7 @@
         line-height: 1;
     }
     .slide-wrap {
-        width: 100vw;
+        width: 100%;
         height: 100%;
         position: absolute;
         overflow: hidden;
@@ -145,7 +145,14 @@
 
 //ZOOM EFFECT
 .zoom {
-    .current-slide, .prev-anim {
+    .current-slide {
+        .slider-slide {
+            animation: background-pan 16s forwards;
+        }
+    }
+}
+.zoom.animating {
+    .prev-slide {
         .slider-slide {
             animation: background-pan 16s forwards;
         }
@@ -167,26 +174,6 @@
         z-index: 2;
         transform: translateX(-100%) rotate(0.001deg);
         transition: transform 1s ease;
-    }
-}
-
-//PAN SLIDER
-.slider-wrap.pan {
-    .next-slide {
-        opacity: 1;
-        z-index: 0;
-    }
-    .prev-slide {
-        animation: pan-out ease-out 1s forwards;
-    }
-    &.right .prev-slide {
-        animation: pan-out ease-in 1s reverse forwards;
-    }
-    .current-slide {
-        animation: pan-in ease-out 1s forwards;
-    }
-    &.right .current-slide {
-        animation: pan-in ease-in 1s reverse forwards;
     }
 }
 
@@ -270,7 +257,27 @@
     }
 }
 
-@keyframes pan-in {
+//PAN SLIDER
+.slider-wrap.pan {
+    .next-slide {
+        // opacity: 0;
+        // z-index: 0;
+    }
+    .prev-slide {
+        animation: pan-out-left ease-out 1s forwards;
+    }
+    &.right .prev-slide {
+        animation: pan-out-right ease-in 1s forwards;
+    }
+    .current-slide {
+        animation: pan-in-right ease-out 1s forwards;
+    }
+    &.right .current-slide {
+        animation: pan-in-left ease-in 1s forwards;
+    }
+}
+
+@keyframes pan-in-right {
     0% {
         transform: translateX(100%);
         z-index: 1;
@@ -283,12 +290,41 @@
     }
 }
 
-@keyframes pan-out {
+@keyframes pan-in-left {
+    0% {
+        transform: translateX(-100%);
+        z-index: 1;
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(0);
+        z-index: 1;
+        opacity: 1;
+    }
+}
+
+@keyframes pan-out-left {
     0% {
         z-index: 1;
     }
     99% {
         transform: translateX(-100%);
+        opacity: 1;
+        z-index: 1;
+    }
+    100% {
+        transform: translateX(0%);
+        opacity: 0;
+        z-index: 0;
+    }
+}
+
+@keyframes pan-out-right {
+    0% {
+        z-index: 1;
+    }
+    99% {
+        transform: translateX(100%);
         opacity: 1;
         z-index: 1;
     }
