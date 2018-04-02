@@ -15,7 +15,6 @@ for (var i = 0; i < sliders.length; i++) {
 }
 
 function sliderInit (e) {
-  console.log(e)
   // SET HEIGHT
   e.height = 0
   // SET FIRST SLIDE AS CURRENT
@@ -45,11 +44,13 @@ function sliderInit (e) {
   // BIND ARROW CLICK FUNCTIONS
   for (var i = 0; i < e.arrows.length; i++) {
     e.arrows[i].addEventListener('click', function (el) {
+      e.prevSlideIndex = e.slideIndex
       if (el.target.classList.contains('arrow-left')) {
-        e.slideIndex--
+        var num = e.slideIndex-1
       } else if (el.target.classList.contains('arrow-right')) {
-        e.slideIndex++
+        var num = e.slideIndex+1
       }
+      updateIndex(e,num)
       clearTimeouts(e)
       e.paused = true
       sliderChange(e)
@@ -60,7 +61,7 @@ function sliderInit (e) {
   for (i = 0; i < e.num; i++) {
     e.indicators[i].addEventListener('click', function (el) {
       clearTimeouts(e)
-      e.slideIndex = Number(el.target.dataset.slide)
+      updateIndex(e,Number(el.target.dataset.slide))
       e.paused = true
       if (el.target.classList.contains('current-indicator') === false) {
         sliderChange(e)
@@ -90,9 +91,15 @@ function sliderChange (e) {
   // SET CLASSES BASED ON SLIDE INDEX
   if (e.num > 1) {
     // remove current styles
+    e.slider.classList.remove('left', 'right')
     for (var i = 0; i < e.num; i++) {
       e.slides[i].classList.remove('current-slide', 'prev-slide', 'next-slide')
       if (e.num) { e.indicators[i].classList.remove('current-indicator') }
+    }
+    if (e.prevSlideIndex < e.slideIndex) {
+      e.slider.classList.add('left')
+    } else {
+      e.slider.classList.add('right')
     }
     // add previous slide
     e.prev.classList.add('prev-slide', 'prev-anim')
@@ -119,9 +126,15 @@ function sliderChange (e) {
   }
 }
 
+function updateIndex (e,n) {
+  e.prevSlideIndex = e.slideIndex
+  e.slideIndex = n
+}
+
 function autoSlide (e) {
   e.intervalSlideChange = setTimeout(function () {
-    e.slideIndex++
+    var num = e.slideIndex+1
+    updateIndex(e,num)
     sliderChange(e)
   }, e.duration)
 }

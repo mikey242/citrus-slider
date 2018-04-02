@@ -177,14 +177,16 @@
         z-index: 0;
     }
     .prev-slide {
-        animation: pan-out 1s forwards;
-        z-index: 1;
-        opacity: 1;
+        animation: pan-out ease-out 1s forwards;
+    }
+    &.right .prev-slide {
+        animation: pan-out ease-in 1s reverse forwards;
     }
     .current-slide {
-        animation: pan-in 1s forwards;
-        z-index: 1;
-        opacity: 1;
+        animation: pan-in ease-out 1s forwards;
+    }
+    &.right .current-slide {
+        animation: pan-in ease-in 1s reverse forwards;
     }
 }
 
@@ -271,13 +273,20 @@
 @keyframes pan-in {
     0% {
         transform: translateX(100%);
+        z-index: 1;
+        opacity: 1;
     }
     100% {
         transform: translateX(0);
+        z-index: 1;
+        opacity: 1;
     }
 }
 
 @keyframes pan-out {
+    0% {
+        z-index: 1;
+    }
     99% {
         transform: translateX(-100%);
         opacity: 1;
@@ -286,7 +295,7 @@
     100% {
         transform: translateX(0%);
         opacity: 0;
-        z-index: 1;
+        z-index: 0;
     }
 }
 
