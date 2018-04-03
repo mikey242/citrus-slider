@@ -4,11 +4,12 @@ var sliderObjects = []
 
 // CREATE SLIDER OBJECTS
 for (var i = 0; i < sliders.length; i++) {
+  var slidesWrap = sliders[i].querySelector('.slides')
   var slides = sliders[i].getElementsByClassName('slide-wrap')
   var arrows = sliders[i].getElementsByClassName('slide-arrow')
   var num = slides.length
   var duration = (sliders[i].dataset.duration.length ? sliders[i].dataset.duration : 5000)
-  var slider = {slider: sliders[i], paused: false, slideIndex: 0, slides: slides, arrows: arrows, num: num, height: 'auto', duration: duration}
+  var slider = {slider: sliders[i], slidesWrap: slidesWrap, paused: false, slideIndex: 0, slides: slides, arrows: arrows, num: num, height: 'auto', duration: duration}
   sliderObjects[i] = slider
   sliderInit(sliderObjects[i])
   autoSlide(sliderObjects[i])
@@ -17,6 +18,9 @@ for (var i = 0; i < sliders.length; i++) {
 function sliderInit (e) {
   // SET HEIGHT
   e.height = 0
+  if (e.slider.classList.contains('pan')) {
+    e.slidesWrap.style.width = e.num + '00%'
+  }
   // SET FIRST SLIDE AS CURRENT
   e.slides[0].classList.add('current-slide')
   e.indicators = {}
@@ -71,9 +75,6 @@ function sliderInit (e) {
 }
 
 function sliderChange (e) {
-  if (e.slider.classList.contains('animating')) {
-    break;
-  }
   e.prev = e.slider.getElementsByClassName('current-slide')[0]
 
   // CALCULATE SLIDE INDEX
@@ -94,16 +95,16 @@ function sliderChange (e) {
   // SET CLASSES BASED ON SLIDE INDEX
   if (e.num > 1) {
     // remove current styles
-    e.slider.classList.remove('left', 'right')
+    e.slider.classList.remove('forwards', 'backwards')
     for (var i = 0; i < e.num; i++) {
       e.slides[i].classList.remove('current-slide', 'prev-slide', 'next-slide')
       if (e.num) { e.indicators[i].classList.remove('current-indicator') }
     }
     // add direction class
     if (e.prevSlideIndex < e.slideIndex) {
-      e.slider.classList.add('left')
+      e.slider.classList.add('forwards')
     } else {
-      e.slider.classList.add('right')
+      e.slider.classList.add('backwards')
     }
 
     e.slider.classList.add('animating')
@@ -121,6 +122,10 @@ function sliderChange (e) {
 
     e.slides[e.slideIndex].classList.add('current-slide')
     if (e.num) { e.indicators[e.slideIndex].classList.add('current-indicator') }
+
+    if (e.slider.classList.contains('pan')) {
+      e.slidesWrap.style.transform = 'translateX(-' + e.slideIndex / e.num * 100 + '00%)'
+    }
 
     e.intervalPrevAnim = setTimeout(function () {
       e.slider.classList.remove('animating')
