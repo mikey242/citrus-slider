@@ -18,6 +18,7 @@ for (var i = 0; i < sliders.length; i++) {
 function sliderInit (e) {
   // SET HEIGHT
   e.height = 0
+  // SET WIDTH
   if (e.slider.classList.contains('pan')) {
     e.slidesWrap.style.width = e.num + '00%'
   }
@@ -129,7 +130,7 @@ function sliderChange (e) {
 
     e.intervalPrevAnim = setTimeout(function () {
       e.slider.classList.remove('animating')
-    }, 1000)
+    }, 1500)
     if (e.paused === false) {
       autoSlide(e)
     }
