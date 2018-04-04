@@ -25,7 +25,8 @@ for (var i = 0; i < sliders.length; i++) {
     return e.src
   })
   var duration = (el.hasAttribute('data-duration') ? el.dataset.duration : 5000)
-  sliderObjects[i] = {slider: el, imgElements: imgElements, num: num, paused: false, slideIndex: 0, slides: slides, imgUrls: imgUrls, duration: duration}
+  var zoom = (el.classList.contains('zoom') ? true : false)
+  sliderObjects[i] = {slider: el, imgElements: imgElements, num: num, zoom: zoom, paused: false, slideIndex: 0, slides: slides, imgUrls: imgUrls, duration: duration}
   sliderConstruct(sliderObjects[i])
 }
 
@@ -46,19 +47,22 @@ function sliderConstruct(e) {
   e.arrows = [arrowLeft,arrowRight]
 
   // CREATE SLIDES ELEMENTS
-  var slideContainer = document.createElement("DIV")
-  slideContainer.setAttribute("class", "slides")
+  var slidesContainer = document.createElement("DIV")
+  slidesContainer.setAttribute("class", "slides")
   for (let i = 0; i < e.num; i++) {
     e.slides[i].removeChild(e.imgElements[i])
-    e.slides[i].style.backgroundImage = "url(" + e.imgUrls[i] + ")"
     if (i===0) {
-      e.slides[i].classList.add('slide', 'current-slide')
+      e.slides[i].classList.add('slide-wrap', 'current-slide')
     } else {
-      e.slides[i].classList.add('slide')
+      e.slides[i].classList.add('slide-wrap')
     }
-    slideContainer.appendChild(e.slides[i])
+    var slideInner = document.createElement("DIV")
+    slideInner.style.backgroundImage = "url(" + e.imgUrls[i] + ")"
+    slideInner.setAttribute("class", "slide")
+    e.slides[i].appendChild(slideInner)
+    slidesContainer.appendChild(e.slides[i])
   }
-  fragment.appendChild(slideContainer)
+  fragment.appendChild(slidesContainer)
   delete e.imgElements
 
   // CREATE INDICATORS ELEMENTS
@@ -109,7 +113,7 @@ function setBindings(e) {
         updateIndex(e,Number(el.target.dataset.slide))
         e.paused = true
         if (el.target.classList.contains('current-indicator') === false) {
-          // sliderChange(e)
+          sliderChange(e)
         }
       })
     }

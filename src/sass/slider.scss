@@ -3,7 +3,7 @@
     overflow: hidden;
     z-index: 0;
     position: relative;
-    .slides, .slide {
+    .slides, .slide-wrap, .slide {
         width: 100%;
         height: 100%;
     }
@@ -14,7 +14,7 @@
         z-index: 0;
         opacity: 1;
     }
-    .slide {
+    .slide-wrap {
         background-repeat: no-repeat;
         background-size: cover;
         position: absolute;
@@ -120,6 +120,51 @@
     }
 }
 
+//ZOOM EFFECT
+.skroll-slider.zoom {
+    .current-slide .slide {
+        animation: background-pan 16s forwards;
+    }
+
+}
+.skroll-slider.zoom.animating {
+    .prev-slide .slide {
+        animation: background-pan 16s forwards;
+    }
+}
+
+//ZOOM-FADE SLIDER
+.skroll-slider.zoom-fade {
+    .current-slide {
+        z-index: 1;
+        opacity: 1;
+    }
+    &.forwards {
+        .next-slide {
+            opacity: 1;
+            z-index: 0;
+        }
+        .prev-slide {
+            opacity: 1;
+            animation: zoom-fade 1s forwards;
+        }
+    }
+
+    &.backwards {
+        .next-slide {
+            opacity: 0;
+            z-index: 0;
+        }
+        .prev-slide {
+            opacity: 1;
+            z-index: 1;
+        }
+        .current-slide {
+            z-index: 2;
+            animation: zoom-fade-reverse 1s forwards;
+        }
+    }
+}
 
 
 
@@ -211,22 +256,6 @@
 //         margin-bottom: 0;
 //     }
 // }
-
-//ZOOM EFFECT
-.zoom {
-    .current-slide {
-        .slide {
-            animation: background-pan 16s forwards;
-        }
-    }
-}
-.zoom.animating {
-    .prev-slide {
-        .slide {
-            animation: background-pan 16s forwards;
-        }
-    }
-}
 
 //SLIDE SLIDER
 .slider-wrap.slide {
@@ -325,39 +354,6 @@
     }
     .slide-wrap {
         position: relative;
-    }
-}
-
-//ZOOM-FADE SLIDER
-.skroll-slider.zoom-fade {
-    .current-slide {
-        z-index: 1;
-        opacity: 1;
-    }
-    &.forwards {
-        .next-slide {
-            opacity: 1;
-            z-index: 0;
-        }
-        .prev-slide {
-            opacity: 1;
-            animation: zoom-fade 1s forwards;
-        }
-    }
-
-    &.backwards {
-        .next-slide {
-            opacity: 0;
-            z-index: 0;
-        }
-        .prev-slide {
-            opacity: 1;
-            z-index: 1;
-        }
-        .current-slide {
-            z-index: 2;
-            animation: zoom-fade-reverse 1s forwards;
-        }
     }
 }
 
