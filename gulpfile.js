@@ -12,7 +12,7 @@ let rename = require("gulp-rename")
 // folders
 let folder = {
   src: 'src/',
-  demo: 'demo/'
+  dist: 'dist/'
 }
 
 gulp.task('default', function () {
@@ -28,13 +28,13 @@ gulp.task('sass', function () {
     .pipe(sourcemaps.write())
     .pipe(browserSync.stream())
     .pipe(cleanCSS({compatibility: 'ie8'}))
-    .pipe(gulp.dest(folder.demo + 'css'))
+    .pipe(gulp.dest(folder.dist + 'css'))
 })
 
 gulp.task('js', function () {
   return gulp.src(folder.src + 'js/*.js')
     .pipe(uglify())
     .pipe(rename('skroll-slider.min.js'))
-    .pipe(gulp.dest(folder.demo + 'js/')) // Start piping stream to tasks!
+    .pipe(gulp.dest(folder.dist + 'js/')) // Start piping stream to tasks!
   browserSync.reload()
 })

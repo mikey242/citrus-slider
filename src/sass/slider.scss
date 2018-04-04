@@ -1,10 +1,81 @@
 //GENERAL SLIDER STYLES
-.slider-wrap {
+.skroll-slider {
     overflow: hidden;
     z-index: 0;
     position: relative;
-    a {
-        color: #fff;
+    .slides, .slide {
+        width: 100%;
+        height: 100%;
+    }
+    .slides {
+        position: absolute;
+        overflow: hidden;
+        display: block;
+        z-index: 0;
+        opacity: 1;
+    }
+    .slide {
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: absolute;
+    }
+    .indicators {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        border-radius: 10px;
+        bottom: 10%;
+        left: 50%;
+        height: 14px;
+        transform: translateX(-50%);
+        z-index: 2;
+        &:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            background: #fff;
+            border-radius: 10px;
+            width: calc(100% - 2px);
+            height: 14px;
+            transform: scaleX(0) translateY(-50%);
+        }
+        &.transition-first:before {
+            right: 0;
+            animation: line-grow-left 0.6s forwards;
+        }
+        &.transition-last:before {
+            left: 0;
+            animation: line-grow-right 0.6s forwards;
+        }
+        .slide-indicator {
+            width: 14px;
+            height: 14px;
+            background: #fff;
+            border-radius: 50%;
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            &:not(:first-child){
+                margin-left: 20px;
+            }
+            &:before {
+                content: '';
+                background: transparent;
+                border: 2px solid #fff;
+                position: absolute;
+                width: 50%;
+                height: 50%;
+                border-radius: 50%;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%) rotate(0.001deg);
+                transition: all 0.6s ease;
+            }
+            &.current-indicator:before {
+                width: 200%;
+                height: 200%;
+            }
+        }
     }
     .slide-arrow {
         position: absolute;
@@ -25,142 +96,133 @@
         &:hover {
             opacity: 0.6;
         }
-    }
-    .arrow-left {
-        left: 0;
-        &:before {
-            content: "";
-            background: url(../img/chevron.svg) no-repeat center/25%;
-            transform: rotate(180deg);
-            width: 100%;
-            height: 100%;
-        }
-    }
-    .arrow-right {
-        right: 0;
-        &:before {
-            content: "";
-            background: url(../img/chevron.svg) no-repeat center/25%;
-            width: 100%;
-            height: 100%;
-        }
-    }
-}
-
-.slide-indicators {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    border-radius: 10px;
-    bottom: 10%;
-    left: 50%;
-    height: 14px;
-    transform: translateX(-50%);
-    z-index: 2;
-    &:before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        background: #fff;
-        border-radius: 10px;
-        width: calc(100% - 2px);
-        height: 14px;
-        transform: scaleX(0) translateY(-50%);
-    }
-    &.transition-first:before {
-        right: 0;
-        animation: line-grow-left 0.6s forwards;
-    }
-    &.transition-last:before {
-        left: 0;
-        animation: line-grow-right 0.6s forwards;
-    }
-    .slide-indicator {
-        width: 14px;
-        height: 14px;
-        background: #fff;
-        border-radius: 50%;
-        display: inline-block;
-        position: relative;
-        cursor: pointer;
-        &:not(:first-child){
-            margin-left: 20px;
-        }
         &:before {
             content: '';
-            background: transparent;
-            border: 2px solid #fff;
-            position: absolute;
-            width: 50%;
-            height: 50%;
-            border-radius: 50%;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%) rotate(0.001deg);
-            transition: all 0.6s ease;
-        }
-        &.current-indicator:before {
-            width: 200%;
-            height: 200%;
-        }
-    }
-}
-
-.slides {
-    position: relative;
-    overflow: hidden;
-    left: 0;
-    top: 0;
-    display: flex;
-    flex-flow: row nowrap;
-    height: 100%;
-    width: 100%;
-    transition: transform 1.5s ease;
-    h2 {
-        margin: 0;
-        line-height: 1;
-    }
-    .slide-wrap {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        overflow: hidden;
-        display: block;
-        z-index: 0;
-        opacity: 1;
-        .slider-slide {
+            width: 100%;
             height: 100%;
             background-repeat: no-repeat;
-            background-size: cover;
             background-position: center;
+            background-size: 25%;
+        }
+    }
+    .left-arrow {
+        left: 0;
+        &:before {
+            background-image: url(../img/chevron.svg);
+            transform: rotate(180deg);
+        }
+    }
+    .right-arrow {
+        right: 0;
+        &:before {
+            background-image: url(../img/chevron.svg);
         }
     }
 }
 
-.slide-text {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    color: #fff;
-    z-index: 1;
-    line-height: 1.5;
-    & > p {
-        margin-bottom: 0;
-    }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+// .slider-wrap {
+//     overflow: hidden;
+//     z-index: 0;
+//     position: relative;
+//     a {
+//         color: #fff;
+//     }
+//     .slide-arrow {
+//         position: absolute;
+//         top: 50%;
+//         width: 15%;
+//         height: 100%;
+//         z-index: 2;
+//         color: #fff;
+//         font-size: 3em;
+//         font-style: normal;
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
+//         opacity: 0.1;
+//         transform: translateY(-50%);
+//         transition: opacity 0.6s ease;
+//         cursor: pointer;
+//         &:hover {
+//             opacity: 0.6;
+//         }
+//         &:before {
+//             content: '';
+//             width: 100%;
+//             height: 100%;
+//             background-repeat: no-repeat;
+//             background-position: center;
+//             background-size: 25%;
+//         }
+//     }
+//     .arrow-left {
+//         left: 0;
+//         &:before {
+//             background-image: url(../img/chevron.svg);
+//             transform: rotate(180deg);
+//         }
+//     }
+//     .arrow-right {
+//         right: 0;
+//         &:before {
+//             background-image: url(../img/chevron.svg);
+//         }
+//     }
+// }
+
+
+// .slide-wrap {
+//     width: 100%;
+//     height: 100%;
+//     position: absolute;
+//     overflow: hidden;
+//     display: block;
+//     z-index: 0;
+//     opacity: 1;
+//     .slide {
+//         height: 100%;
+//         background-repeat: no-repeat;
+//         background-size: cover;
+//         background-position: center;
+//     }
+// }
+
+// .slide-text {
+//     position: absolute;
+//     left: 50%;
+//     top: 50%;
+//     transform: translate(-50%, -50%);
+//     color: #fff;
+//     z-index: 1;
+//     line-height: 1.5;
+//     & > p {
+//         margin-bottom: 0;
+//     }
+// }
 
 //ZOOM EFFECT
 .zoom {
     .current-slide {
-        .slider-slide {
+        .slide {
             animation: background-pan 16s forwards;
         }
     }
 }
 .zoom.animating {
     .prev-slide {
-        .slider-slide {
+        .slide {
             animation: background-pan 16s forwards;
         }
     }
@@ -267,7 +329,7 @@
 }
 
 //ZOOM-FADE SLIDER
-.slider-wrap.zoom-fade {
+.skroll-slider.zoom-fade {
     .current-slide {
         z-index: 1;
         opacity: 1;

@@ -11,12 +11,17 @@
         body {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
-        h1, h2, h3 {
+
+        h1,
+        h2,
+        h3 {
             text-align: center;
         }
+
         h1 {
             font-size: 3em;
         }
+
         h2 {
             font-size: 2em;
         }
@@ -25,67 +30,42 @@
 
 <body>
     <h1> Skroll Slider Demo</h1>
-    <div id="slider1" class="slider-wrap parallax-background-container zoom zoom-fade" data-duration="8000" style="height:400px; width:1000px; margin:auto;">
-        <div class="slides">
-            <div class="slide-wrap">
-                <div class="slider-slide" style="background-image: url(img/1.jpg)">
-                    <div class="slide-text">
-                        <h2>Slide 1</h2>
-                    </div>
+
+    <div id="slider-test" class="skroll-slider zoom-fade" style="height: 400px; width: 1000px; margin: auto;">
+        <div><img src="img/1.jpg"></div>
+        <div><img src="img/2.jpg"></div>
+        <div><img src="img/3.jpg"></div>
+    </div>
+
+    <!-- <div id="slider1" class="slider-wrap parallax-background-container zoom zoom-fade" data-duration="8000" style="height:400px; width:1000px; margin:auto;">
+        <div class="slide-wrap">
+            <div class="slide" style="background-image: url(img/1.jpg)">
+                <div class="slide-text">
+                    <h2>Slide 1</h2>
                 </div>
             </div>
-            <div class="slide-wrap">
-                <div class="slider-slide" style="background-image: url(img/2.jpg)">
-                    <div class="slide-text">
-                        <h2>Slide 2</h2>
-                    </div>
+        </div>
+        <div class="slide-wrap">
+            <div class="slide" style="background-image: url(img/2.jpg)">
+                <div class="slide-text">
+                    <h2>Slide 2</h2>
                 </div>
             </div>
-            <div class="slide-wrap">
-                <div class="slider-slide" style="background-image: url(img/3.jpg)">
-                    <div class="slide-text">
-                        <h2>Slide 3</h2>
-                    </div>
+        </div>
+        <div class="slide-wrap">
+            <div class="slide" style="background-image: url(img/3.jpg)">
+                <div class="slide-text">
+                    <h2>Slide 3</h2>
                 </div>
             </div>
-        </div><!--.slides-->
+        </div>
         <div class="slide-indicators"></div>
         <i class="slide-arrow arrow-left"></i>
         <i class="slide-arrow arrow-right"></i>
-    </div><!--#slider1-->
-    <br>
-    <div id="slider1" class="slider-wrap parallax-background-container zoom pan" data-duration="5000" style="height:400px; width:1000px; margin:auto;">
-        <div class="slides">
-            <div class="slide-wrap">
-                <div class="slider-slide" style="background-image: url(img/1.jpg)">
-                    <div class="slide-text">
-                        <h2>Slide 1</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="slide-wrap">
-                <div class="slider-slide" style="background-image: url(img/2.jpg)">
-                    <div class="slide-text">
-                        <h2>Slide 2</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="slide-wrap">
-                <div class="slider-slide" style="background-image: url(img/3.jpg)">
-                    <div class="slide-text">
-                        <h2>Slide 3</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    </div>
-                </div>
-            </div>
-        </div><!--.slides-->
-        <div class="slide-indicators"></div>
-        <i class="slide-arrow arrow-left"></i>
-        <i class="slide-arrow arrow-right"></i>
-    </div><!--#slider1-->
+    </div> -->
+    <!--#slider1-->
 
 </body>
 <script src="js/skroll-slider.min.js"></script>
+
 </html>
