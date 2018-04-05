@@ -60,11 +60,12 @@ function sliderConstruct(e) {
     var slideInner = document.createElement("DIV")
     slideInner.style.backgroundImage = "url(" + e.imgUrls[i] + ")"
     slideInner.setAttribute("class", "slide")
-    e.slides[i].appendChild(slideInner)
+    e.slides[i].appendChild(slideInner) //NEED TO APPEND THIS TO OTHER OBJECT FIRST
     slidesContainer.appendChild(e.slides[i])
   }
   fragment.appendChild(slidesContainer)
   delete e.img
+  console.log(fragment)
 
   // create indicator elements
   e.indicators = {}
@@ -84,8 +85,7 @@ function sliderConstruct(e) {
   }
 
   // apply changes to dom
-  e.slider.appendChild(fragment)
-  console.log(e)
+  // e.slider.appendChild(fragment)
   setBindings(e)
 }
 
@@ -230,7 +230,6 @@ function sliderChange (e) {
 
     e.slides[e.settings.slideIndex].classList.add('current-slide')
     if (e.settings.num) { e.indicators[e.settings.slideIndex].classList.add('current-indicator') }
-    console.log(e)
     if (e.settings.transition==="pan") {
       e.slider.children[1].style.transform = 'translateX(-' + e.settings.slideIndex / e.settings.num * 100 + '00%)'
     }
