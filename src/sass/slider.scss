@@ -10,9 +10,7 @@
     .slides {
         position: absolute;
         overflow: hidden;
-        display: block;
         z-index: 0;
-        opacity: 1;
     }
     .slide-wrap {
         background-repeat: no-repeat;
@@ -130,6 +128,27 @@
 .skroll-slider.zoom.animating {
     .prev-slide .slide {
         animation: background-pan 16s forwards;
+    }
+}
+
+//PAN SLIDER
+.skroll-slider.pan {
+    .slides {
+        position: absolute;
+        display: flex;
+        transition: transform 1.5s ease;
+    }
+    .slide-text {
+        opacity: 0;
+        transform: translate(-50%, -45%);
+        transition: all 1s ease 1.5s;
+    }
+    .current-slide .slide-text {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+    .slide-wrap {
+        position: relative;
     }
 }
 
@@ -338,24 +357,6 @@
     }
 }
 
-//PAN SLIDER
-.slider-wrap.pan {
-    .slides {
-        position: absolute;
-    }
-    .slide-text {
-        opacity: 0;
-        transform: translate(-50%, -45%);
-        transition: all 1s ease 1.5s;
-    }
-    .current-slide .slide-text {
-        opacity: 1;
-        transform: translate(-50%, -50%);
-    }
-    .slide-wrap {
-        position: relative;
-    }
-}
 
 @keyframes background-pan {
     100% {
