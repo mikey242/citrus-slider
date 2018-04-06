@@ -17,6 +17,22 @@
         background-size: cover;
         position: absolute;
     }
+    .slide {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+    }
+    .slide > * {
+        opacity: 1;
+        transition: all 0.6s ease;
+        transform: translateY(0%);
+
+    }
+    .slide h2 {
+        margin: 0;
+    }
     .indicators {
         position: absolute;
         display: flex;
@@ -116,6 +132,18 @@
             background-image: url(../img/chevron.svg);
         }
     }
+}
+
+//TEXT ANIMATION
+.skroll-slider.animate-text.animating .slide > * {
+    opacity: 0;
+}
+.skroll-slider.animate-text.animating.forwards .slide > * {
+    transform: translateY(-50%);
+}
+
+.skroll-slider.animate-text.animating.backwards .slide > * {
+    transform: translateY(50%);
 }
 
 //ZOOM EFFECT
