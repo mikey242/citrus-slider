@@ -25,7 +25,7 @@ for (var i = 0; i < sliders.length; i++) {
     imgUrls: imgUrls,
     settings: {
       num: num,
-      zoom: true,
+      effect: 'zoom',
       animateText: true,
       paused: false,
       slideIndex: 0,
@@ -34,10 +34,12 @@ for (var i = 0; i < sliders.length; i++) {
     }
   }
   // get settings from data attribute
-  var settings = JSON.parse(el.dataset.skroll)
-  // update object
-  for (const key of Object.keys(settings)) {
-    sliderObjects[i].settings[key] = settings[key]
+  if (el.hasAttribute('data-skroll')){
+    var settings = JSON.parse(el.dataset.skroll)
+    // update object
+    for (const key of Object.keys(settings)) {
+      sliderObjects[i].settings[key] = settings[key]
+    }
   }
   sliderConstruct(sliderObjects[i])
 }
@@ -46,7 +48,7 @@ for (var i = 0; i < sliders.length; i++) {
 function sliderConstruct(e) {
   
   // set container classes
-  e.slider.classList.add((e.settings.zoom ? 'zoom' : null), (e.settings.animateText ? 'animate-text' : null), e.settings.transition)
+  e.slider.classList.add(e.settings.effect+"-effect", (e.settings.animateText ? 'animate-text' : null), e.settings.transition)
   
   var fragment = document.createDocumentFragment();
 
@@ -87,11 +89,14 @@ function sliderConstruct(e) {
     }
     slideFragment.slide = document.createElement("DIV")
     slideFragment.slide.classList.add("slide")
+    slideFragment.slideText = document.createElement("DIV")
+    slideFragment.slideText.classList.add("slide-text")
     slideFragment.slide.style.backgroundImage = "url(" + e.imgUrls[i] + ")"
     for (let n = 0; n < Object.keys(e.slideText[i]).length; n++) {
-      slideFragment.slide.appendChild(e.slideText[i][n])
+      slideFragment.slideText.appendChild(e.slideText[i][n])
     }
     slideFragment.slideWrap.appendChild(slideFragment.slide)
+    slideFragment.slideWrap.appendChild(slideFragment.slideText)
     slides.appendChild(slideFragment.slideWrap)
   }
   fragment.appendChild(slides)
@@ -125,15 +130,18 @@ function setBindings(e) {
   // bind arrow click functions
   for (var i = 0; i < e.arrows.length; i++) {
     e.arrows[i].addEventListener('click', function (el) {
+      if (e.slider.classList.contains("animating")) {
+        return;
+      }
       e.prevSlideIndex = e.settings.slideIndex
       if (el.target.classList.contains('left-arrow')) {
         var num = e.settings.slideIndex - 1
       } else if (el.target.classList.contains('right-arrow')) {
         var num = e.settings.slideIndex + 1
       }
+      e.settings.paused = true
       updateIndex(e, num)
       clearTimeouts(e)
-      e.settings.paused = true
       sliderChange(e)
     })
   }
@@ -141,10 +149,13 @@ function setBindings(e) {
   // bind indicator click functions
   for (i = 0; i < e.settings.num; i++) {
     e.indicators[i].addEventListener('click', function (el) {
-      clearTimeouts(e)
-      updateIndex(e, Number(el.target.dataset.slide))
-      e.settings.paused = true
+      if (e.slider.classList.contains("animating")) {
+        return;
+      }
       if (el.target.classList.contains('current-indicator') === false) {
+        clearTimeouts(e)
+        updateIndex(e, Number(el.target.dataset.slide))
+        e.settings.paused = true
         sliderChange(e)
       }
     })
@@ -217,7 +228,7 @@ function sliderChange(e) {
 
     e.intervalPrevAnim = setTimeout(function () {
       e.slider.classList.remove('animating')
-    }, 1500)
+    }, 1000)
     if (e.settings.paused === false) {
       autoSlide(e)
     }

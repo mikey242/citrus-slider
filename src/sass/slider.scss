@@ -1,5 +1,8 @@
 //GENERAL SLIDER STYLES
 .skroll-slider {
+    display: block;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
     z-index: 0;
     position: relative;
@@ -14,24 +17,25 @@
     }
     .slide-wrap {
         position: absolute;
+        overflow: hidden;
     }
     .slide {
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: center;
-        align-items: center;
-        color: #fff;
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
     }
-    .slide > * {
-        opacity: 1;
-        transition: all 0.6s ease;
-        transform: translateY(0%);
+    .slide-text {
+        position: absolute;
+        color: #fff;
+        text-align: center;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: all 0.4s ease;
 
     }
-    .slide h2 {
+    .slide-text h2 {
         margin: 0;
     }
     .indicators {
@@ -136,27 +140,39 @@
 }
 
 //TEXT ANIMATION
-.skroll-slider.animate-text.animating .slide > * {
-    opacity: 0;
+.skroll-slider.animate-text:not(.animating) .current-slide .slide-text,
+.skroll-slider.animate-text .prev-slide .slide-text {
+    opacity: 1;
 }
-.skroll-slider.animate-text.animating.forwards .slide > * {
-    transform: translateY(-50%);
-}
-
-.skroll-slider.animate-text.animating.backwards .slide > * {
-    transform: translateY(50%);
+.skroll-slider.animate-text.animating .current-slide .slide-text {
+    transform: translate(-50%, -60%);
 }
 
 //ZOOM EFFECT
-.skroll-slider.zoom {
+.skroll-slider.zoom-effect {
     .current-slide .slide {
-        animation: background-pan 16s forwards;
+        animation: background-zoom 16s forwards;
     }
 
 }
-.skroll-slider.zoom.animating {
+.skroll-slider.zoom-effect.animating {
     .prev-slide .slide {
-        animation: background-pan 16s forwards;
+        animation: background-zoom 16s forwards;
+    }
+}
+
+//PAN EFFECT
+.skroll-slider.pan-effect {
+    .current-slide .slide {
+        transform: scale(1.2) translate(5%, -5%);
+        animation: background-pan linear 16s forwards;
+    }
+
+}
+.skroll-slider.pan-effect.animating {
+    .prev-slide .slide {
+        transform: scale(1.2) translate(5%, -5%);
+        animation: background-pan linear 16s forwards;
     }
 }
 
@@ -165,16 +181,7 @@
     .slides {
         position: absolute;
         display: flex;
-        transition: transform 1.5s ease;
-    }
-    .slide-text {
-        opacity: 0;
-        transform: translate(-50%, -45%);
-        transition: all 1s ease 1.5s;
-    }
-    .current-slide .slide-text {
-        opacity: 1;
-        transform: translate(-50%, -50%);
+        transition: transform 1s ease;
     }
     .slide-wrap {
         position: relative;
@@ -197,7 +204,6 @@
             animation: zoom-fade 1s forwards;
         }
     }
-
     &.backwards {
         .next-slide {
             opacity: 0;
@@ -214,99 +220,8 @@
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-// .slider-wrap {
-//     overflow: hidden;
-//     z-index: 0;
-//     position: relative;
-//     a {
-//         color: #fff;
-//     }
-//     .slide-arrow {
-//         position: absolute;
-//         top: 50%;
-//         width: 15%;
-//         height: 100%;
-//         z-index: 2;
-//         color: #fff;
-//         font-size: 3em;
-//         font-style: normal;
-//         display: flex;
-//         align-items: center;
-//         justify-content: center;
-//         opacity: 0.1;
-//         transform: translateY(-50%);
-//         transition: opacity 0.6s ease;
-//         cursor: pointer;
-//         &:hover {
-//             opacity: 0.6;
-//         }
-//         &:before {
-//             content: '';
-//             width: 100%;
-//             height: 100%;
-//             background-repeat: no-repeat;
-//             background-position: center;
-//             background-size: 25%;
-//         }
-//     }
-//     .arrow-left {
-//         left: 0;
-//         &:before {
-//             background-image: url(../img/chevron.svg);
-//             transform: rotate(180deg);
-//         }
-//     }
-//     .arrow-right {
-//         right: 0;
-//         &:before {
-//             background-image: url(../img/chevron.svg);
-//         }
-//     }
-// }
-
-
-// .slide-wrap {
-//     width: 100%;
-//     height: 100%;
-//     position: absolute;
-//     overflow: hidden;
-//     display: block;
-//     z-index: 0;
-//     opacity: 1;
-//     .slide {
-//         height: 100%;
-//         background-repeat: no-repeat;
-//         background-size: cover;
-//         background-position: center;
-//     }
-// }
-
-// .slide-text {
-//     position: absolute;
-//     left: 50%;
-//     top: 50%;
-//     transform: translate(-50%, -50%);
-//     color: #fff;
-//     z-index: 1;
-//     line-height: 1.5;
-//     & > p {
-//         margin-bottom: 0;
-//     }
-// }
-
 //SLIDE SLIDER
-.slider-wrap.slide {
+.skroll-slider.slide {
     .next-slide {
         opacity: 1;
         z-index: 0;
@@ -318,13 +233,18 @@
     .prev-slide {
         opacity: 1;
         z-index: 2;
-        transform: translateX(-100%) rotate(0.001deg);
         transition: transform 1s ease;
+    }
+    &.forwards .prev-slide {
+        transform: translateX(-100%) rotate(0.001deg);
+    }
+    &.backwards .prev-slide {
+        transform: translateX(100%) rotate(0.001deg);
     }
 }
 
 //FADE SLIDER
-.slider-wrap.fade {
+.skroll-slider.fade {
     .current-slide {
         z-index: 1;
         opacity: 1;
@@ -340,7 +260,7 @@
 }
 
 //FALLAWAY SLIDER
-.slider-wrap.fallaway {
+.skroll-slider.fallaway {
     .next-slide {
         opacity: 1;
         z-index: 0;
@@ -358,7 +278,7 @@
 }
 
 // DOWN AND OUT SLIDER
-.slider-wrap.downandout {
+.skroll-slider.downandout {
     .next-slide {
         opacity: 1;
         z-index: 0;
@@ -374,20 +294,13 @@
     }
 }
 
-//FULL PAGE SLIDER
-.slider-wrap.full-page {
-    z-index: -1;
-    position: absolute;
-    .slides {
-        filter: brightness(.4) blur(0);
-    }
-    .slide-indicators, .slide-arrow {
-        display: none;
-    }
+@keyframes background-pan {
+    100% {
+        transform: scale(1.2) rotate(0.001deg) translate(-5%, 5%);
+    }    
 }
 
-
-@keyframes background-pan {
+@keyframes background-zoom {
     100% {
         transform: scale(1.1) rotate(0.001deg);
     }    
@@ -427,15 +340,6 @@
 }
 
 @keyframes fallaway {
-    0% {
-        transform: rotate(0) rotate(0.001deg);
-    }
-    10% {
-        transform: rotate(-5deg) rotate(0.001deg);
-    }
-    50% {
-        transform: rotate(-3deg) rotate(0.001deg);
-    }
     100% {
         transform: translateY(100%) rotate(-40deg) rotate(0.001deg);
     }
