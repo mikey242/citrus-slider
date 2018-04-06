@@ -5,9 +5,9 @@ This is a simple JavaScript and CSS based slider. There are no third party requi
 ##Example usage
 
 ```HTML
-    <div id="slider-test" class="skroll-slider zoom-fade" style="height: 400px; width: 1000px; margin: auto;">
-        <div><img src="img/1.jpg"></div>
-        <div><img src="img/2.jpg"></div>
-        <div><img src="img/3.jpg"></div>
+    <div id="slider-test" class="skroll-slider" data-skroll='{"duration" : 4000, "transition" : "pan"}'>
+        <div><img src="img/1.jpg"><h2>Slide 1</h2><p>First slide with some sample text</p></div>
+        <div><img src="img/2.jpg"><h2>Slide 2</h2></div>
+        <div><img src="img/3.jpg"><h2>Slide 3</h2></div>
     </div>
 ```
