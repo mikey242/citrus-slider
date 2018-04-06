@@ -21,25 +21,26 @@ gulp.task('default', function () {
 
 gulp.task('sass', function () {
   return gulp.src(folder.src + 'sass/*.scss')
-    .pipe(sourcemaps.init())
+    // .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixer({
       browsers: ['last 2 versions', '> 5%', 'Firefox ESR']
     }))
-    .pipe(sourcemaps.write())
+    // .pipe(sourcemaps.write())
     .pipe(browserSync.stream())
     .pipe(cleanCSS({
       compatibility: 'ie8'
     }))
+    .pipe(rename('skroll-slider.min.css'))
     .pipe(gulp.dest(folder.dist + 'css'))
 })
 
 gulp.task('js', function (cb) {
   pump([
       gulp.src(folder.src + 'js/*.js'),
-      sourcemaps.init(),
+      // sourcemaps.init(),
       uglify(),
-      sourcemaps.write(),
+      // sourcemaps.write(),
       rename('skroll-slider.min.js'),
       gulp.dest(folder.dist + 'js/')
     ],
