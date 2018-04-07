@@ -28,7 +28,7 @@ for (var i = 0; i < sliders.length; i++) {
       showIndicators: true,
       showArrows: true,
       paused: false,
-      autoPause: true,
+      autoPause: false,
       slideIndex: 0,
       duration: 5000,
       transition: "pan"
