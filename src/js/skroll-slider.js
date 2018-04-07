@@ -12,8 +12,8 @@ for (var i = 0; i < sliders.length; i++) {
     return e.src
   })
   var slideText = {}
-  for (let n = 0; n < slides.length; n++) {
-    slideText[n] = slides[n].querySelectorAll('*:not(img)')
+  for (let n = 0; n < slides.length; n++) {    
+    slideText[n] = slides[n]
   }
   // set defaults
   sliderObjects[i] = {
@@ -87,12 +87,9 @@ function sliderConstruct(e) {
     }
     slideFragment.slide = document.createElement("DIV")
     slideFragment.slide.classList.add("slide")
-    slideFragment.slideText = document.createElement("DIV")
+    slideFragment.slideText = e.slideText[i]
     slideFragment.slideText.classList.add("slide-text")
     slideFragment.slide.style.backgroundImage = "url(" + e.imgUrls[i] + ")"
-    for (let n = 0; n < Object.keys(e.slideText[i]).length; n++) {
-      slideFragment.slideText.appendChild(e.slideText[i][n])
-    }
     slideFragment.slideWrap.appendChild(slideFragment.slide)
     slideFragment.slideWrap.appendChild(slideFragment.slideText)
     slides.appendChild(slideFragment.slideWrap)
