@@ -8,14 +8,12 @@ for (var i = 0; i < sliders.length; i++) {
   var imgElements = el.querySelectorAll('img')
   var slides = el.children
   var imgUrls = Array.from(el.querySelectorAll('img')).map(function (e, i) {
+    e.remove()
     return e.src
   })
   var slideText = {}
   for (let n = 0; n < slides.length; n++) {
     slideText[n] = slides[n].querySelectorAll('*:not(img)')
-  }
-  while (el.firstChild) {
-    el.removeChild(el.firstChild);
   }
   // set defaults
   sliderObjects[i] = {
