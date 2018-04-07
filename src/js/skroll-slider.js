@@ -28,6 +28,7 @@ for (var i = 0; i < sliders.length; i++) {
       showIndicators: true,
       showArrows: true,
       paused: false,
+      autoPause: true,
       slideIndex: 0,
       duration: 5000,
       transition: "pan"
@@ -144,7 +145,6 @@ function setBindings(e) {
       } else if (el.target.classList.contains('right-arrow')) {
         var num = e.settings.slideIndex + 1
       }
-      e.settings.paused = true
       updateIndex(e, num)
       clearTimeouts(e)
       sliderChange(e)
@@ -160,7 +160,6 @@ function setBindings(e) {
       if (el.target.classList.contains('current-indicator') === false) {
         clearTimeouts(e)
         updateIndex(e, Number(el.target.dataset.slide))
-        e.settings.paused = true
         sliderChange(e)
       }
     })
@@ -254,6 +253,9 @@ function autoSlide(e) {
 }
 
 function clearTimeouts(e) {
+  if (e.settings.autoPause) {
+    e.settings.paused = true
+  }
   clearTimeout(e.intervalSlideChange)
   clearTimeout(e.intervalPrevAnim)
   for (var i = 0; i < e.num; i++) {
