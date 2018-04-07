@@ -18,7 +18,7 @@ let folder = {
 gulp.task('default', function () {
   browserSync.init({
     server: "./"
-});
+  });
   gulp.watch("./*.html").on('change', browserSync.reload);
   gulp.watch(folder.src + 'img/*', gulp.series('image'))
   gulp.watch(folder.src + 'sass/*', gulp.series('sass'))
