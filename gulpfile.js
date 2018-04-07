@@ -21,6 +21,7 @@ gulp.task('default', function () {
   });
   gulp.watch("./*.html").on('change', browserSync.reload);
   gulp.watch(folder.src + 'img/*', gulp.series('image'))
+  gulp.watch('demo/*', gulp.series('image-demo'))
   gulp.watch(folder.src + 'sass/*', gulp.series('sass'))
   gulp.watch(folder.src + 'js/*', gulp.series('js'))
 })
@@ -31,6 +32,16 @@ gulp.task('image', function (cb) {
       image(),
       gulp.dest(folder.dist + 'img/'),
       browserSync.stream()
+    ],
+    cb
+  );
+})
+
+gulp.task('image-demo', function (cb) {
+  pump([
+      gulp.src('demo/*', {base: './'}),
+      image(),
+      gulp.dest('./'),
     ],
     cb
   );
