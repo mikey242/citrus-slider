@@ -26,6 +26,7 @@ for (var i = 0; i < sliders.length; i++) {
       effect: 'zoom',
       animateText: true,
       showIndicators: true,
+      showArrows: true,
       paused: false,
       slideIndex: 0,
       duration: 5000,
@@ -53,7 +54,11 @@ function sliderConstruct(e) {
 
   // create arrows
   var arrowContainer = document.createElement("DIV")
-  arrowContainer.setAttribute("class", "arrows")
+  if (e.settings.showArrows==false) {
+    arrowContainer.setAttribute("class", "arrows hidden")
+  } else {
+    arrowContainer.setAttribute("class", "arrows")
+  }
   var arrowLeft = document.createElement("DIV")
   arrowLeft.setAttribute("class", "slide-arrow left-arrow")
   var arrowRight = document.createElement("DIV")
