@@ -57,7 +57,7 @@ gulp.task('sass', function (cb) {
       cleanCSS({
         compatibility: 'ie8'
       }),
-      rename('skroll-slider.min.css'),
+      rename('citrus-slider.min.css'),
       gulp.dest(folder.dist + 'css'),
       browserSync.stream()
     ],
@@ -71,7 +71,7 @@ gulp.task('js', function (cb) {
       // sourcemaps.init(),
       uglify(),
       // sourcemaps.write(),
-      rename('skroll-slider.min.js'),
+      rename('citrus-slider.min.js'),
       gulp.dest(folder.dist + 'js/')
     ],
     cb

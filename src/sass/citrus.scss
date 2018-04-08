@@ -1,5 +1,5 @@
 //GENERAL SLIDER STYLES
-.skroll-slider {
+.citrus-slider {
     display: block;
     width: 100%;
     height: 100%;
@@ -145,39 +145,39 @@
 }
 
 //TEXT ANIMATION
-.skroll-slider.animate-text .slide-text {
+.citrus-slider.animate-text .slide-text {
     opacity: 0;
 }
-.skroll-slider.animate-text:not(.animating) .current-slide .slide-text,
-.skroll-slider.animate-text .prev-slide .slide-text {
+.citrus-slider.animate-text:not(.animating) .current-slide .slide-text,
+.citrus-slider.animate-text .prev-slide .slide-text {
     opacity: 1;
 }
-.skroll-slider.animate-text.animating .current-slide .slide-text {
+.citrus-slider.animate-text.animating .current-slide .slide-text {
     transform: translate(-50%, -60%);
 }
 
 //ZOOM EFFECT
-.skroll-slider.zoom-effect {
+.citrus-slider.zoom-effect {
     .current-slide .slide {
         animation: background-zoom 16s forwards;
     }
 
 }
-.skroll-slider.zoom-effect.animating {
+.citrus-slider.zoom-effect.animating {
     .prev-slide .slide {
         animation: background-zoom 16s forwards;
     }
 }
 
 //PAN EFFECT
-.skroll-slider.pan-effect {
+.citrus-slider.pan-effect {
     .current-slide .slide {
         transform: scale(1.2) translate(5%, -5%);
         animation: background-pan linear 16s forwards;
     }
 
 }
-.skroll-slider.pan-effect.animating {
+.citrus-slider.pan-effect.animating {
     .prev-slide .slide {
         transform: scale(1.2) translate(5%, -5%);
         animation: background-pan linear 16s forwards;
@@ -185,7 +185,7 @@
 }
 
 //PAN SLIDER
-.skroll-slider.pan {
+.citrus-slider.pan {
     .slides {
         position: absolute;
         display: flex;
@@ -197,7 +197,7 @@
 }
 
 //ZOOM-FADE SLIDER
-.skroll-slider.zoom-fade {
+.citrus-slider.zoom-fade {
     .current-slide {
         z-index: 1;
         opacity: 1;
@@ -229,7 +229,7 @@
 }
 
 //SCOPE SLIDER
-.skroll-slider.scope {
+.citrus-slider.scope {
     .current-slide {
         z-index: 1;
         opacity: 1;
@@ -265,7 +265,7 @@
 }
 
 //SLIDE SLIDER
-.skroll-slider.slide {
+.citrus-slider.slide {
     .next-slide {
         opacity: 1;
         z-index: 0;
@@ -288,7 +288,7 @@
 }
 
 //FADE SLIDER
-.skroll-slider.fade {
+.citrus-slider.fade {
     .current-slide {
         z-index: 1;
         opacity: 1;
@@ -304,7 +304,7 @@
 }
 
 //FALLAWAY SLIDER
-.skroll-slider.fallaway {
+.citrus-slider.fallaway {
     .next-slide {
         opacity: 1;
         z-index: 0;
@@ -322,7 +322,7 @@
 }
 
 // DOWN AND OUT SLIDER
-.skroll-slider.downandout {
+.citrus-slider.downandout {
     .next-slide {
         opacity: 1;
         z-index: 0;

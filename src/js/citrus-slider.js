@@ -1,4 +1,18 @@
-let sliders = document.getElementsByClassName('skroll-slider')
+/*
+       .__  __                       
+  ____ |__|/  |________ __ __  ______
+_/ ___\|  \   __\_  __ \  |  \/  ___/
+\  \___|  ||  |  |  | \/  |  /\___ \ 
+ \___  >__||__|  |__|  |____//____  >
+     \/                           \/ 
+ Version: 1.0.3
+  Author: Michael Iseard
+ Website: https://iseardmedia.com
+    Docs: https://gitea.iseardmedia.com/michael/citrus-Slider
+    Repo: https://gitea.iseardmedia.com/michael/citrus-Slider
+ */
+
+let sliders = document.getElementsByClassName('citrus-slider')
 var sliderObjects = []
 
 // CREATE SLIDER OBJECTS
@@ -35,8 +49,8 @@ for (var i = 0; i < sliders.length; i++) {
     }
   }
   // get settings from data attribute
-  if (el.hasAttribute('data-skroll')){
-    var settings = JSON.parse(el.dataset.skroll)
+  if (el.hasAttribute('data-citrus')){
+    var settings = JSON.parse(el.dataset.citrus)
     // update object
     for (const key of Object.keys(settings)) {
       sliderObjects[i].settings[key] = settings[key]
