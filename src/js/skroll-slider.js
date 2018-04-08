@@ -29,7 +29,7 @@ for (var i = 0; i < sliders.length; i++) {
       showArrows: true,
       paused: false,
       autoPause: false,
-      slideIndex: 0,
+      slideIndex: 1,
       duration: 5000,
       transition: "pan"
     }
@@ -41,6 +41,11 @@ for (var i = 0; i < sliders.length; i++) {
     for (const key of Object.keys(settings)) {
       sliderObjects[i].settings[key] = settings[key]
     }
+  }
+  if (sliderObjects[i].settings.slideIndex > sliderObjects[i].num || sliderObjects[i].settings.slideIndex <= 0) {
+    sliderObjects[i].settings.slideIndex = 0;
+  } else {
+    sliderObjects[i].settings.slideIndex--
   }
   sliderConstruct(sliderObjects[i])
 }
