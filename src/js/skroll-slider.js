@@ -84,7 +84,7 @@ function sliderConstruct(e) {
   // set container width
   if (e.settings.transition==="pan") {
     slides.style.width = e.num + '00%'
-    slides.style.transform = 'translateX(-' + e.settings.slideIndex / e.num * 100 + '00%)'
+    slides.style.transform = 'translateX(-' + e.settings.slideIndex / e.num * 100 + '%)'
   }
 
   var slideFragment = {}
@@ -233,7 +233,7 @@ function sliderChange(e) {
       e.indicators[e.settings.slideIndex].classList.add('current-indicator')
     }
     if (e.settings.transition === "pan") {
-      e.slider.children[1].style.transform = 'translateX(-' + e.settings.slideIndex / e.num * 100 + '00%)'
+      e.slider.children[1].style.transform = 'translateX(-' + e.settings.slideIndex / e.num * 100 + '%)'
     }
 
     e.intervalPrevAnim = setTimeout(function () {
