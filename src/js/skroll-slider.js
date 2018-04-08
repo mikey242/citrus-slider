@@ -54,7 +54,13 @@ for (var i = 0; i < sliders.length; i++) {
 function sliderConstruct(e) {
   
   // set container classes
-  e.slider.classList.add(e.settings.effect+"-effect", (e.settings.animateText ? 'animate-text' : null), e.settings.transition)
+  e.slider.classList.add(e.settings.transition)
+  if (e.settings.effect) {
+    e.slider.classList.add(e.settings.effect+"-effect")
+  }
+  if (e.settings.animateText) {
+    e.slider.classList.add('animate-text')
+  }
   
   var fragment = document.createDocumentFragment();
 
