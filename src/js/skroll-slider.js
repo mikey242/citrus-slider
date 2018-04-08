@@ -79,6 +79,7 @@ function sliderConstruct(e) {
   // set container width
   if (e.settings.transition==="pan") {
     slides.style.width = e.num + '00%'
+    slides.style.transform = 'translateX(-' + e.settings.slideIndex / e.num * 100 + '00%)'
   }
 
   var slideFragment = {}
