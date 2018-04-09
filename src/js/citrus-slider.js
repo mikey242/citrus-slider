@@ -19,12 +19,17 @@ var sliderObjects = []
 for (var i = 0; i < sliders.length; i++) {
   var el = sliders[i]
   var num = el.children.length
-  var imgElements = el.querySelectorAll('img')
   var slides = el.children
-  var imgUrls = Array.from(el.querySelectorAll('img')).map(function (e, i) {
-    e.remove()
-    return e.src
+  // var imgUrls = Array.from(el.getElementsByTagName('img')).map(function (e, i) {
+  //   e.remove()
+  //   return e.src
+  // })
+  var imgUrls = Array.from(slides).map(function (e, i) {
+      var src = e.getElementsByTagName('img')[0].src
+      e.getElementsByTagName('img')[0].remove()
+      return src
   })
+
   var slideText = {}
   for (let n = 0; n < slides.length; n++) {    
     slideText[n] = slides[n]
@@ -32,7 +37,6 @@ for (var i = 0; i < sliders.length; i++) {
   // set defaults
   sliderObjects[i] = {
     slider: el,
-    img: imgElements,
     slideText: slideText,
     imgUrls: imgUrls,
     num: num,
