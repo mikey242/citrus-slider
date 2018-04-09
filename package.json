@@ -5,21 +5,20 @@
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
-    "browser-sync": "^2.18.12",
-    "gulp": "^4.0.0",
+    "browser-sync": "^2.23.6",
+    "gulp": "^3.9.1",
     "gulp-autoprefixer": "^5.0.0",
-    "gulp-clean-css": "^3.9.0",
+    "gulp-check-unused-css": "^2.1.4",
+    "gulp-clean-css": "^3.9.3",
     "gulp-image": "^4.3.0",
     "gulp-rename": "^1.2.2",
-    "gulp-sass": "^3.1.0",
-    "gulp-sourcemaps": "^2.6.0",
+    "gulp-sass": "^4.0.1",
+    "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify-es": "^1.0.1",
-    "node-sass": "^4.7.2",
     "pump": "^3.0.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify src/js/app.js -o dist/js/bundle.js"
+    "gulp": "gulp"
   },
   "author": "Michael Iseard",
   "license": "ISC"
