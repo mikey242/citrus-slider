@@ -13,29 +13,25 @@ _/ ___\|  \   __\_  __ \  |  \/  ___/
  */
 
 let sliders = document.getElementsByClassName('citrus-slider')
-var sliderObjects = []
+var sliderObject = []
 
 // CREATE SLIDER OBJECTS
 for (var i = 0; i < sliders.length; i++) {
   var el = sliders[i]
   var num = el.children.length
   var slides = el.children
-  // var imgUrls = Array.from(el.getElementsByTagName('img')).map(function (e, i) {
-  //   e.remove()
-  //   return e.src
-  // })
   var imgUrls = Array.from(slides).map(function (e, i) {
-      var src = e.getElementsByTagName('img')[0].src
-      e.getElementsByTagName('img')[0].remove()
-      return src
+    var src = e.getElementsByTagName('img')[0].src
+    e.getElementsByTagName('img')[0].remove()
+    return src
   })
 
   var slideText = {}
-  for (let n = 0; n < slides.length; n++) {    
+  for (let n = 0; n < slides.length; n++) {
     slideText[n] = slides[n]
   }
   // set defaults
-  sliderObjects[i] = {
+  sliderObject[i] = {
     slider: el,
     slideText: slideText,
     imgUrls: imgUrls,
@@ -46,45 +42,48 @@ for (var i = 0; i < sliders.length; i++) {
       showIndicators: true,
       showArrows: true,
       paused: false,
-      autoPause: false,
+      autoPause: true,
       slideIndex: 1,
       duration: 5000,
       transition: "pan"
     }
   }
   // get settings from data attribute
-  if (el.hasAttribute('data-citrus')){
+  if (el.hasAttribute('data-citrus')) {
     var settings = JSON.parse(el.dataset.citrus)
     // update object
     for (const key of Object.keys(settings)) {
-      sliderObjects[i].settings[key] = settings[key]
+      sliderObject[i].settings[key] = settings[key]
     }
   }
-  if (sliderObjects[i].settings.slideIndex > sliderObjects[i].num || sliderObjects[i].settings.slideIndex <= 0) {
-    sliderObjects[i].settings.slideIndex = 0;
+  if (sliderObject[i].settings.slideIndex > sliderObject[i].num || sliderObject[i].settings.slideIndex <= 0) {
+    sliderObject[i].settings.slideIndex = 0;
   } else {
-    sliderObjects[i].settings.slideIndex--
+    sliderObject[i].settings.slideIndex--
   }
-  sliderConstruct(sliderObjects[i])
+  // sliderConstruct(sliderObject[i])
+  setClasses(sliderObject[i], sliderConstruct)
 }
 
-// CONSTRUCT DOM ELEMENTS
-function sliderConstruct(e) {
-  
+function setClasses(e, cb) {
   // set container classes
-  e.slider.classList.add(e.settings.transition)
+  e.slider.classList.add("transition-" + e.settings.transition)
   if (e.settings.effect) {
-    e.slider.classList.add(e.settings.effect+"-effect")
+    e.slider.classList.add("effect-" + e.settings.effect)
   }
   if (e.settings.animateText) {
     e.slider.classList.add('animate-text')
   }
-  
+  cb(e)
+}
+
+// CONSTRUCT DOM ELEMENTS
+function sliderConstruct(e) {
   var fragment = document.createDocumentFragment();
 
   // create arrows
   var arrowContainer = document.createElement("DIV")
-  if (e.settings.showArrows==false) {
+  if (e.settings.showArrows == false) {
     arrowContainer.setAttribute("class", "arrows hidden")
   } else {
     arrowContainer.setAttribute("class", "arrows")
@@ -102,11 +101,11 @@ function sliderConstruct(e) {
   var slides = document.createElement("DIV");
   e.slides = slides
   slides.classList.add("slides")
-  if (e.settings.transition==="pan") {
+  if (e.settings.transition === "pan") {
     slides.style.width = e.num + '00%'
   }
   // set container width
-  if (e.settings.transition==="pan") {
+  if (e.settings.transition === "pan") {
     slides.style.width = e.num + '00%'
     slides.style.transform = 'translateX(-' + e.settings.slideIndex / e.num * 100 + '%)'
   }
@@ -117,15 +116,15 @@ function sliderConstruct(e) {
 
   for (let i = 0; i < e.num; i++) {
     slideFragment.slideWrap = document.createElement("DIV")
-    if (i===e.settings.slideIndex) {
+    if (i === e.settings.slideIndex) {
       slideFragment.slideWrap.setAttribute("class", "slide-wrap current-slide")
     } else {
       slideFragment.slideWrap.setAttribute("class", "slide-wrap")
     }
     slideFragment.slide = document.createElement("DIV")
-    slideFragment.slide.setAttribute("class","slide")
+    slideFragment.slide.setAttribute("class", "slide")
     slideFragment.slideText = e.slideText[i]
-    slideFragment.slideText.setAttribute("class","slide-text")
+    slideFragment.slideText.setAttribute("class", "slide-text")
     slideFragment.slide.style.backgroundImage = "url(" + e.imgUrls[i] + ")"
     slideFragment.slideWrap.appendChild(slideFragment.slide)
     slideFragment.slideWrap.appendChild(slideFragment.slideText)
@@ -136,7 +135,7 @@ function sliderConstruct(e) {
   // create indicator elements
   e.indicators = {}
   var indicatorsContainer = document.createElement("DIV")
-  if (e.settings.showIndicators==false) {
+  if (e.settings.showIndicators == false) {
     indicatorsContainer.setAttribute("class", "indicators hidden")
   } else {
     indicatorsContainer.setAttribute("class", "indicators")
@@ -156,7 +155,7 @@ function sliderConstruct(e) {
 
   e.slider.appendChild(fragment)
   setBindings(e)
-  autoSlide(sliderObjects[i])
+  autoSlide(sliderObject[i])
 
 }
 
