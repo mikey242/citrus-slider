@@ -35,9 +35,7 @@ function sassTask(src, dest, cb) {
     autoprefixer({
       browsers: ['last 2 versions', '> 5%', 'Firefox ESR']
     }),
-    cleanCSS({
-      compatibility: 'ie10'
-    }),
+    cleanCSS(),
     rename('citrus-slider.min.css'),
     sourcemaps.write(folder.maps),
     gulp.dest(dest),
