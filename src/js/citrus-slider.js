@@ -7,7 +7,7 @@ _/ ___\|  \   __\_  __ \  |  \/  ___/
      \/                           \/ 
  Version: 1.0.3
   Author: Michael Iseard
- Website: https://iseardmedia.com
+ Website: https://citrus.iseardmedia.com
     Docs: https://gitea.iseardmedia.com/michael/citrus-Slider
     Repo: https://gitea.iseardmedia.com/michael/citrus-Slider
  */
@@ -61,11 +61,15 @@ for (var i = 0; i < sliders.length; i++) {
   } else {
     sliderObject[i].settings.slideIndex--
   }
-  // sliderConstruct(sliderObject[i])
-  setClasses(sliderObject[i], sliderConstruct)
+
+  // initialize slider and begin auto slide
+  sliderInit(sliderObject[i])
+  autoSlide(sliderObject[i])
 }
 
-function setClasses(e, cb) {
+// SETS CLASSES OF SLIDER OBJECT
+function sliderInit(e) {
+  e.slider.setAttribute("class", "citrus-slider")
   // set container classes
   e.slider.classList.add("transition-" + e.settings.transition)
   if (e.settings.effect) {
@@ -74,7 +78,7 @@ function setClasses(e, cb) {
   if (e.settings.animateText) {
     e.slider.classList.add('animate-text')
   }
-  cb(e)
+  sliderConstruct(e)
 }
 
 // CONSTRUCT DOM ELEMENTS
@@ -153,10 +157,9 @@ function sliderConstruct(e) {
     e.indicators[i] = indicator
   }
 
+  e.slider.innerHTML = ""
   e.slider.appendChild(fragment)
   setBindings(e)
-  autoSlide(sliderObject[i])
-
 }
 
 // CREATE BINDINGS FOR ARROWS AND INDICATORS
