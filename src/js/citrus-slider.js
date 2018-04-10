@@ -5,7 +5,7 @@ _/ ___\|  \   __\_  __ \  |  \/  ___/
 \  \___|  ||  |  |  | \/  |  /\___ \ 
  \___  >__||__|  |__|  |____//____  >
      \/                           \/ 
- Version: 1.0.3
+ Version: 1.0.4
   Author: Michael Iseard
  Website: https://citrus.iseardmedia.com
     Docs: https://gitea.iseardmedia.com/michael/citrus-Slider
@@ -65,8 +65,7 @@ for (var i = 0; i < sliders.length; i++) {
   }
 
   // initialize slider and begin auto slide
-  sliderInit(sliderObject[i])
-  autoSlide(sliderObject[i])
+  sliderInit(sliderObject[i], autoSlide(sliderObject[i]))
 }
 
 // SETS CLASSES OF SLIDER OBJECT
@@ -100,7 +99,7 @@ function sliderConstruct(e) {
   arrowRight.setAttribute("class", "slide-arrow right-arrow")
   arrowContainer.appendChild(arrowLeft)
   arrowContainer.appendChild(arrowRight)
-  fragment.prepend(arrowContainer)
+  fragment.appendChild(arrowContainer)
   e.arrows = [arrowLeft, arrowRight]
 
   // create slides
@@ -170,6 +169,9 @@ function setBindings(e) {
   // bind arrow click functions
   for (var i = 0; i < e.arrows.length; i++) {
     e.arrows[i].addEventListener('click', function (el) {
+      if (e.settings.autoPause) {
+        e.settings.paused = true
+      }
       if (e.slider.classList.contains("animating")) {
         return;
       }
@@ -188,6 +190,9 @@ function setBindings(e) {
   // bind indicator click functions
   for (i = 0; i < e.num; i++) {
     e.indicators[i].addEventListener('click', function (el) {
+      if (e.settings.autoPause) {
+        e.settings.paused = true
+      }
       if (e.slider.classList.contains("animating")) {
         return;
       }
@@ -287,9 +292,6 @@ function autoSlide(e) {
 }
 
 function clearTimeouts(e) {
-  if (e.settings.autoPause) {
-    e.settings.paused = true
-  }
   clearTimeout(e.intervalSlideChange)
   clearTimeout(e.intervalPrevAnim)
   for (var i = 0; i < e.num; i++) {
