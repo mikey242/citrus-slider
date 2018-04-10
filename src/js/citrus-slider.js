@@ -56,6 +56,7 @@ for (var i = 0; i < sliders.length; i++) {
     for (const key of Object.keys(settings)) {
       sliderObject[i].settings[key] = settings[key]
     }
+    el.removeAttribute('data-citrus')
   }
   if (sliderObject[i].settings.slideIndex > sliderObject[i].num || sliderObject[i].settings.slideIndex <= 0) {
     sliderObject[i].settings.slideIndex = 0;
