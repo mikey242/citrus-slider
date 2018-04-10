@@ -37,15 +37,16 @@ for (var i = 0; i < sliders.length; i++) {
     imgUrls: imgUrls,
     num: num,
     settings: {
-      effect: 'zoom',
+      effect: true,
+      effectType: 'zoom',
       animateText: true,
       showIndicators: true,
       showArrows: true,
       paused: false,
       autoPause: true,
       slideIndex: 1,
-      duration: 5000,
-      transition: "pan"
+      slideDuration: 5000,
+      slideTransition: "pan"
     }
   }
   // get settings from data attribute
@@ -71,9 +72,9 @@ for (var i = 0; i < sliders.length; i++) {
 function sliderInit(e) {
   e.slider.setAttribute("class", "citrus-slider")
   // set container classes
-  e.slider.classList.add("transition-" + e.settings.transition)
+  e.slider.classList.add("transition-" + e.settings.slideTransition)
   if (e.settings.effect) {
-    e.slider.classList.add("effect-" + e.settings.effect)
+    e.slider.classList.add("effect-" + e.settings.effectType)
   }
   if (e.settings.animateText) {
     e.slider.classList.add('animate-text')
@@ -105,11 +106,11 @@ function sliderConstruct(e) {
   var slides = document.createElement("DIV");
   e.slides = slides
   slides.classList.add("slides")
-  if (e.settings.transition === "pan") {
+  if (e.settings.slideTransition === "pan") {
     slides.style.width = e.num + '00%'
   }
   // set container width
-  if (e.settings.transition === "pan") {
+  if (e.settings.slideTransition === "pan") {
     slides.style.width = e.num + '00%'
     slides.style.transform = 'translateX(-' + e.settings.slideIndex / e.num * 100 + '%)'
   }
@@ -258,7 +259,7 @@ function sliderChange(e) {
     if (e.num) {
       e.indicators[e.settings.slideIndex].classList.add('current-indicator')
     }
-    if (e.settings.transition === "pan") {
+    if (e.settings.slideTransition === "pan") {
       e.slider.children[1].style.transform = 'translateX(-' + e.settings.slideIndex / e.num * 100 + '%)'
     }
 
@@ -280,7 +281,7 @@ function autoSlide(e) {
       var num = e.settings.slideIndex + 1
       updateIndex(e, num)
       sliderChange(e)
-    }, e.settings.duration)
+    }, e.settings.slideDuration)
   }
 }
 
