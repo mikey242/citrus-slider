@@ -119,6 +119,7 @@
         }
         &:before {
             content: '';
+            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 300 600" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M34.697 75.628a14.998 14.998 0 0 1 24.371-16.556c73.606 73.602 194.123 194.119 230.325 230.321 5.858 5.858 5.858 15.356 0 21.214L59.07 540.93a15 15 0 0 1-24.374-16.559C63.579 457.12 100 360.35 100 300c0-60.35-36.421-157.12-65.303-224.372z" fill="%23fff"/></svg>');
             width: 100%;
             height: 100%;
             background-repeat: no-repeat;
@@ -129,15 +130,11 @@
     .left-arrow {
         left: 0;
         &:before {
-            background-image: url(../img/chevron.svg);
             transform: rotate(180deg);
         }
     }
     .right-arrow {
         right: 0;
-        &:before {
-            background-image: url(../img/chevron.svg);
-        }
     }
     .hidden {
         display: none;
@@ -157,27 +154,27 @@
 }
 
 //ZOOM EFFECT
-.citrus-slider.zoom-effect {
+.citrus-slider.effect-zoom {
     .current-slide .slide {
         animation: background-zoom 16s forwards;
     }
 
 }
-.citrus-slider.zoom-effect.animating {
+.citrus-slider.effect-zoom.animating {
     .prev-slide .slide {
         animation: background-zoom 16s forwards;
     }
 }
 
 //PAN EFFECT
-.citrus-slider.pan-effect {
+.citrus-slider.effect-pan {
     .current-slide .slide {
         transform: scale(1.2) translate(5%, -5%);
         animation: background-pan linear 16s forwards;
     }
 
 }
-.citrus-slider.pan-effect.animating {
+.citrus-slider.effect-pan.animating {
     .prev-slide .slide {
         transform: scale(1.2) translate(5%, -5%);
         animation: background-pan linear 16s forwards;
@@ -185,7 +182,7 @@
 }
 
 //PAN SLIDER
-.citrus-slider.pan {
+.citrus-slider.transition-pan {
     .slides {
         position: absolute;
         display: flex;
@@ -197,7 +194,7 @@
 }
 
 //ZOOM-FADE SLIDER
-.citrus-slider.zoom-fade {
+.citrus-slider.transition-zoom-fade {
     .current-slide {
         z-index: 1;
         opacity: 1;
@@ -229,7 +226,7 @@
 }
 
 //SCOPE SLIDER
-.citrus-slider.scope {
+.citrus-slider.transition-scope {
     .current-slide {
         z-index: 1;
         opacity: 1;
@@ -265,7 +262,7 @@
 }
 
 //SLIDE SLIDER
-.citrus-slider.slide {
+.citrus-slider.transition-slide {
     .next-slide {
         opacity: 1;
         z-index: 0;
@@ -288,7 +285,7 @@
 }
 
 //FADE SLIDER
-.citrus-slider.fade {
+.citrus-slider.transition-fade {
     .current-slide {
         z-index: 1;
         opacity: 1;
@@ -304,7 +301,7 @@
 }
 
 //FALLAWAY SLIDER
-.citrus-slider.fallaway {
+.citrus-slider.transition-fallaway {
     .next-slide {
         opacity: 1;
         z-index: 0;
@@ -322,7 +319,7 @@
 }
 
 // DOWN AND OUT SLIDER
-.citrus-slider.downandout {
+.citrus-slider.transition-downandout {
     .next-slide {
         opacity: 1;
         z-index: 0;
