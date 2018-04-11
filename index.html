@@ -19,7 +19,7 @@
 
 <body>
     <div class="content" style="width:1000px; margin:auto; height: 400px;">
-        <div class="citrus-slider" data-citrus='{"animateText" : true, "effect" : "zoom", "showIndicators" : true, "showArrows" : true, "paused" : false, "autoPause" : true, "slideIndex" : 1, "duration" : 5000, "slideTransition" : "pan"}'>
+        <div class="citrus-slider" data-citrus='{"animateText" : true, "effect" : "zoom", "showIndicators" : true, "showArrows" : true, "paused" : false, "autoPause" : true, "slideIndex" : 3, "duration" : 5000, "slideTransition" : "pan"}'>
             <div>
                 <img src="test/dist/img/1.png">
                 <h2>Slide 1</h2>
@@ -139,7 +139,7 @@
                 for (const key of Object.keys(update)) {
                     slider[key] = update[key]
                 }
-                sliderInit(sliderObject[0], clearTimeouts(sliderObject[0]), autoSlide(sliderObject[0]))
+                sliderObject[0].reset()
             })
         }
     </script>
