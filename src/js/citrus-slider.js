@@ -13,71 +13,88 @@ _/ ___\|  \   __\_  __ \  |  \/  ___/
  */
 
 let sliders = document.getElementsByClassName('citrus-slider')
-var sliderObject = []
+var sliderObject = new Object()
 
-// CREATE SLIDER OBJECTS
-for (var i = 0; i < sliders.length; i++) {
-  var el = sliders[i]
-  var num = el.children.length
-  var slides = el.children
-  var imgUrls = Array.from(slides).map(function (e, i) {
+var defaultSettings = {
+  effect: true,
+  effectType: 'zoom',
+  animateText: true,
+  showIndicators: true,
+  showArrows: true,
+  paused: false,
+  autoPause: true,
+  slideIndex: 1,
+  slideDuration: 5000,
+  slideTransition: "pan"
+}
+
+function getContent(el) {
+  var slideText = {}
+  for (let n = 0; n < el.length; n++) {
+    slideText[n] = el[n]
+  }
+  return slideText
+}
+
+function getImages(el) {
+  urls = Array.from(el.children).map(function (e, i) {
     var src = e.getElementsByTagName('img')[0].src
     e.getElementsByTagName('img')[0].remove()
     return src
   })
+  return urls
+}
 
-  var slideText = {}
-  for (let n = 0; n < slides.length; n++) {
-    slideText[n] = slides[n]
-  }
-  // set defaults
-  sliderObject[i] = {
-    slider: el,
-    slideText: slideText,
-    imgUrls: imgUrls,
-    num: num,
-    settings: {
-      effect: true,
-      effectType: 'zoom',
-      animateText: true,
-      showIndicators: true,
-      showArrows: true,
-      paused: false,
-      autoPause: true,
-      slideIndex: 1,
-      slideDuration: 5000,
-      slideTransition: "pan"
+class Slider {
+  constructor(el) {
+    this.sliderContainer = el
+    this.slideText = getContent(el.children)
+    this.num = el.children.length
+    this.imgUrls = getImages(el)
+    this.settings = defaultSettings
+    this.reset = function () {
+      sliderInit(this, clearTimeouts(this), autoSlide(this))
     }
   }
+}
+
+// CREATE SLIDER OBJECTS
+for (var i = 0; i < sliders.length; i++) {
+  sliderObject[i] = new Slider(sliders[0])
+  slider = sliderObject[i]
+  // initialize slider and begin auto slide
+  getSettings(slider)
+  sliderInit(slider)
+  autoSlide(slider)
+}
+
+function getSettings(e) {
   // get settings from data attribute
-  if (el.hasAttribute('data-citrus')) {
-    var settings = JSON.parse(el.dataset.citrus)
+  if (e.sliderContainer.hasAttribute('data-citrus')) {
+    var settings = JSON.parse(e.sliderContainer.dataset.citrus)
     // update object
     for (const key of Object.keys(settings)) {
-      sliderObject[i].settings[key] = settings[key]
+      e.settings[key] = settings[key]
     }
-    el.removeAttribute('data-citrus')
+    e.sliderContainer.removeAttribute('data-citrus')
   }
-  if (sliderObject[i].settings.slideIndex > sliderObject[i].num || sliderObject[i].settings.slideIndex <= 0) {
-    sliderObject[i].settings.slideIndex = 0;
+  if (e.settings.slideIndex > e.num || e.settings.slideIndex <= 0) {
+    e.settings.slideIndex = 0;
   } else {
-    sliderObject[i].settings.slideIndex--
+    e.settings.slideIndex--
   }
-
-  // initialize slider and begin auto slide
-  sliderInit(sliderObject[i], autoSlide(sliderObject[i]))
 }
 
 // SETS CLASSES OF SLIDER OBJECT
 function sliderInit(e) {
-  e.slider.setAttribute("class", "citrus-slider")
+  e.sliderContainer.setAttribute("class", "citrus-slider")
   // set container classes
-  e.slider.classList.add("transition-" + e.settings.slideTransition)
+  e.sliderContainer.classList.add("transition-" + e.settings.slideTransition)
   if (e.settings.effect) {
-    e.slider.classList.add("effect-" + e.settings.effectType)
+    e.sliderContainer.classList.add("effect-" + e.settings.effectType)
   }
   if (e.settings.animateText) {
-    e.slider.classList.add('animate-text')
+    e.sliderContainer.classList.add('animate-text')
   }
   sliderConstruct(e)
 }
@@ -158,8 +175,8 @@ function sliderConstruct(e) {
     e.indicators[i] = indicator
   }
 
-  e.slider.innerHTML = ""
-  e.slider.appendChild(fragment)
+  e.sliderContainer.innerHTML = ""
+  e.sliderContainer.appendChild(fragment)
   setBindings(e)
 }
 
@@ -172,7 +189,7 @@ function setBindings(e) {
       if (e.settings.autoPause) {
         e.settings.paused = true
       }
-      if (e.slider.classList.contains("animating")) {
+      if (e.sliderContainer.classList.contains("animating")) {
         return;
       }
       e.prevSlideIndex = e.settings.slideIndex
@@ -193,7 +210,7 @@ function setBindings(e) {
       if (e.settings.autoPause) {
         e.settings.paused = true
       }
-      if (e.slider.classList.contains("animating")) {
+      if (e.sliderContainer.classList.contains("animating")) {
         return;
       }
       if (el.target.classList.contains('current-indicator') === false) {
@@ -206,7 +223,7 @@ function setBindings(e) {
 }
 
 function sliderChange(e) {
-  e.prev = e.slider.getElementsByClassName('current-slide')[0]
+  e.prev = e.sliderContainer.getElementsByClassName('current-slide')[0]
 
   // calculate slide index
   if (e.settings.slideIndex < 0) {
@@ -234,7 +251,7 @@ function sliderChange(e) {
   // set classes based on slide index
   if (e.num > 1) {
     // remove current styles
-    e.slider.classList.remove('forwards', 'backwards')
+    e.sliderContainer.classList.remove('forwards', 'backwards')
     for (var i = 0; i < e.num; i++) {
       e.slides.children[i].classList.remove('current-slide', 'prev-slide', 'next-slide')
       if (e.num) {
@@ -243,12 +260,12 @@ function sliderChange(e) {
     }
     // add direction class
     if (e.prevSlideIndex < e.settings.slideIndex) {
-      e.slider.classList.add('forwards')
+      e.sliderContainer.classList.add('forwards')
     } else {
-      e.slider.classList.add('backwards')
+      e.sliderContainer.classList.add('backwards')
     }
 
-    e.slider.classList.add('animating')
+    e.sliderContainer.classList.add('animating')
 
     // add previous slide
     e.prev.classList.add('prev-slide')
@@ -266,11 +283,11 @@ function sliderChange(e) {
       e.indicators[e.settings.slideIndex].classList.add('current-indicator')
     }
     if (e.settings.slideTransition === "pan") {
-      e.slider.children[1].style.transform = 'translateX(-' + e.settings.slideIndex / e.num * 100 + '%)'
+      e.sliderContainer.children[1].style.transform = 'translateX(-' + e.settings.slideIndex / e.num * 100 + '%)'
     }
 
     e.intervalPrevAnim = setTimeout(function () {
-      e.slider.classList.remove('animating')
+      e.sliderContainer.classList.remove('animating')
     }, 1000)
     autoSlide(e)
   }
@@ -295,6 +312,6 @@ function clearTimeouts(e) {
   clearTimeout(e.intervalSlideChange)
   clearTimeout(e.intervalPrevAnim)
   for (var i = 0; i < e.num; i++) {
-    e.slider.classList.remove('animating')
+    e.sliderContainer.classList.remove('animating')
   }
 }
