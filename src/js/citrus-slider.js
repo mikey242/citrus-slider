@@ -12,21 +12,47 @@ _/ ___\|  \   __\_  __ \  |  \/  ___/
     Repo: https://gitea.iseardmedia.com/michael/citrus-Slider
  */
 
-let sliders = document.getElementsByClassName('citrus-slider')
-var sliderObject = new Object()
+var sliderObjects = {}
 
-var defaultSettings = {
-  effect: true,
-  effectType: 'zoom',
-  animateText: true,
-  showIndicators: true,
-  showArrows: true,
-  paused: false,
-  autoPause: true,
-  slideIndex: 1,
-  slideDuration: 5000,
-  slideTransition: "pan"
+var Slider = function (el) {
+  this.sliderContainer = el
+  this.slideText = getContent(el.children)
+  this.num = el.children.length
+  this.imgUrls = getImages(el)
+  this.settings = {
+    effect: true,
+    effectType: 'zoom',
+    animateText: true,
+    showIndicators: true,
+    showArrows: true,
+    paused: false,
+    autoPause: true,
+    slideIndex: 0,
+    slideDuration: 5000,
+    slideTransition: "pan"
+  }
+  this.reset = function () {
+    sliderInit(this)
+    clearTimeouts(this)
+    autoSlide(this)
+  }
 }
+
+getSliders()
+
+// CREATE SLIDER OBJECTS
+function getSliders() {
+  let sliders = document.getElementsByClassName('citrus-slider')
+  for (var i = 0; i < sliders.length; i++) {
+    sliderObjects[i] = new Slider(sliders[i])
+    e = sliderObjects[i]
+    // initialize slider and begin auto slide
+    getSettings(e)
+    sliderInit(e)
+    autoSlide(e)
+  }
+}
+
 
 function getContent(el) {
   var slideText = {}
@@ -45,29 +71,6 @@ function getImages(el) {
   return urls
 }
 
-class Slider {
-  constructor(el) {
-    this.sliderContainer = el
-    this.slideText = getContent(el.children)
-    this.num = el.children.length
-    this.imgUrls = getImages(el)
-    this.settings = defaultSettings
-    this.reset = function () {
-      sliderInit(this, clearTimeouts(this), autoSlide(this))
-    }
-  }
-}
-
-// CREATE SLIDER OBJECTS
-for (var i = 0; i < sliders.length; i++) {
-  sliderObject[i] = new Slider(sliders[0])
-  slider = sliderObject[i]
-  // initialize slider and begin auto slide
-  getSettings(slider)
-  sliderInit(slider)
-  autoSlide(slider)
-}
-
 function getSettings(e) {
   // get settings from data attribute
   if (e.sliderContainer.hasAttribute('data-citrus')) {
@@ -77,11 +80,11 @@ function getSettings(e) {
       e.settings[key] = settings[key]
     }
     e.sliderContainer.removeAttribute('data-citrus')
-  }
-  if (e.settings.slideIndex > e.num || e.settings.slideIndex <= 0) {
-    e.settings.slideIndex = 0;
-  } else {
-    e.settings.slideIndex--
+    if (e.settings.slideIndex > e.num || e.settings.slideIndex <= 0) {
+      e.settings.slideIndex = 0;
+    } else {
+      e.settings.slideIndex--
+    }
   }
 }
 
