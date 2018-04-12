@@ -5,7 +5,7 @@ _/ ___\|  \   __\_  __ \  |  \/  ___/
 \  \___|  ||  |  |  | \/  |  /\___ \ 
  \___  >__||__|  |__|  |____//____  >
      \/                           \/ 
- Version: 1.0.4
+ Version: 1.0.5
   Author: Michael Iseard
  Website: https://citrus.iseardmedia.com
     Docs: https://gitea.iseardmedia.com/michael/citrus-Slider
@@ -20,6 +20,9 @@ var Slider = function (el) {
   this.num = el.children.length
   this.imgUrls = getImages(el)
   this.settings = {
+    // default settings
+    width: "100%",
+    height: "100%",
     effect: true,
     effectType: 'zoom',
     animateText: true,
@@ -46,14 +49,13 @@ function getSliders() {
   for (var i = 0; i < sliders.length; i++) {
     sliderObjects[i] = new Slider(sliders[i])
     e = sliderObjects[i]
-    // initialize slider and begin auto slide
     getSettings(e)
     sliderInit(e)
     autoSlide(e)
   }
 }
 
-
+// GET SLIDES INNER CONTENT
 function getContent(el) {
   var slideText = {}
   for (let n = 0; n < el.length; n++) {
@@ -62,6 +64,7 @@ function getContent(el) {
   return slideText
 }
 
+// GET IMAGE URLS FROM SLIDES
 function getImages(el) {
   urls = Array.from(el.children).map(function (e, i) {
     var src = e.getElementsByTagName('img')[0].src
@@ -71,6 +74,20 @@ function getImages(el) {
   return urls
 }
 
+// CALCULATE HEIGHT OF GIVEN SLIDER ELEMENT
+function getHeight(e) {
+  var height = 0
+  for (let i = 0; i < e.num; i++) {
+    let textHeight = e.slideText[i].offsetHeight
+    if (height < textHeight) {
+      height = textHeight
+    }
+  }
+  height += 250
+  return height + "px"
+}
+
+// GET SETTINGS FROM DATA ATTRIBUTE
 function getSettings(e) {
   // get settings from data attribute
   if (e.sliderContainer.hasAttribute('data-citrus')) {
@@ -88,8 +105,13 @@ function getSettings(e) {
   }
 }
 
-// SETS CLASSES OF SLIDER OBJECT
+// SETS CLASSES AND SIZE SLIDER CONTAINER
 function sliderInit(e) {
+  var height = e.settings.height
+  if (e.settings.height === "auto") {
+    height = getHeight(e)
+  }
+  e.sliderContainer.setAttribute("style", "width:" + e.settings.width + "; height:" + height)
   e.sliderContainer.setAttribute("class", "citrus-slider")
   // set container classes
   e.sliderContainer.classList.add("transition-" + e.settings.slideTransition)
