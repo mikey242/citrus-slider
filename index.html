@@ -19,7 +19,7 @@
 
 <body>
     <div class="content" style="width:1000px; margin:auto; height: 400px;">
-        <div class="citrus-slider" data-citrus='{"height" : "100%" , "animateText" : true, "effect" : "zoom", "showIndicators" : true, "showArrows" : true, "paused" : false, "autoPause" : true, "slideIndex" : 3, "duration" : 5000, "slideTransition" : "pan"}'>
+        <div class="citrus-slider" data-citrus='{"height" : "100%" , "animateText" : true, "effect" : "zoom", "showIndicators" : true, "showArrows" : true, "paused" : false, "autoPause" : true, "slideIndex" : 3, "slideDuration" : 5000, "slideTransition" : "pan"}'>
             <div>
                 <img src="test/dist/img/1.png">
                 <h2>Slide 1</h2>
@@ -117,6 +117,29 @@
                 </div>
             </div>
         </div>
+        <br>
+        <div class="citrus-slider" data-citrus='{"height" : "100%" , "animateText" : true, "effect" : "zoom", "showIndicators" : true, "showArrows" : true, "paused" : false, "autoPause" : true, "slideIndex" : 1, "slideDuration" : 3000, "slideTransition" : "zoom-fade"}'>
+            <div>
+                <img src="test/dist/img/1.png">
+                <h2>Slide 1</h2>
+                <p>Some sample text.</p>
+            </div>
+            <div>
+                <img src="test/dist/img/2.png">
+                <h2>Slide 2</h2>
+                <p>Some sample text.</p>
+            </div>
+            <div>
+                <img src="test/dist/img/3.png">
+                <h2>Slide 3</h2>
+                <p>Some sample text.</p>
+            </div>
+            <div>
+                <img src="test/dist/img/4.png">
+                <h2>Slide 4</h2>
+                <p>Some sample text.</p>
+            </div>
+        </div>
     </div>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -131,7 +154,7 @@
     <script src="dist/js/citrus-slider.min.js?v=1.0.41"></script>
     <script>
         var settings = document.getElementById("demo-settings").querySelectorAll(".dropdown-item")
-        var slider = sliderObjects[0].settings
+        var slider = getSliders[0].settings
         for (let i = 0; i < settings.length; i++) {
             settings[i].addEventListener('click', function (e) {
                 e.preventDefault()
@@ -139,7 +162,7 @@
                 for (const key of Object.keys(update)) {
                     slider[key] = update[key]
                 }
-                sliderObjects[0].reset()
+                getSliders[0].reset()
             })
         }
     </script>
