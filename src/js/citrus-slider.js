@@ -12,7 +12,9 @@ _/ ___\|  \   __\_  __ \  |  \/  ___/
     Repo: https://gitea.iseardmedia.com/michael/citrus-Slider
  */
 
-var sliderObjects = {}
+"use strict"
+
+var sliderObjects = []
 
 var Slider = function (el) {
   this.sliderContainer = el
@@ -23,6 +25,7 @@ var Slider = function (el) {
     // default settings
     width: "100%",
     height: "100%",
+    autoHeight: false,
     effect: true,
     effectType: 'zoom',
     animateText: true,
@@ -48,7 +51,7 @@ function getSliders() {
   let sliders = document.getElementsByClassName('citrus-slider')
   for (var i = 0; i < sliders.length; i++) {
     sliderObjects[i] = new Slider(sliders[i])
-    e = sliderObjects[i]
+    var e = sliderObjects[i]
     getSettings(e)
     sliderInit(e)
     autoSlide(e)
@@ -66,7 +69,7 @@ function getContent(el) {
 
 // GET IMAGE URLS FROM SLIDES
 function getImages(el) {
-  urls = Array.from(el.children).map(function (e, i) {
+  var urls = Array.from(el.children).map(function (e, i) {
     var src = e.getElementsByTagName('img')[0].src
     e.getElementsByTagName('img')[0].remove()
     return src
@@ -75,7 +78,7 @@ function getImages(el) {
 }
 
 // CALCULATE HEIGHT OF GIVEN SLIDER ELEMENT
-function getHeight(e) {
+function autoHeight(e) {
   var height = 0
   for (let i = 0; i < e.num; i++) {
     let textHeight = e.slideText[i].offsetHeight
@@ -108,8 +111,8 @@ function getSettings(e) {
 // SETS CLASSES AND SIZE SLIDER CONTAINER
 function sliderInit(e) {
   var height = e.settings.height
-  if (e.settings.height === "auto") {
-    height = getHeight(e)
+  if (e.settings.autoHeight === true) {
+    height = autoHeight(e)
   }
   e.sliderContainer.setAttribute("style", "width:" + e.settings.width + "; height:" + height)
   e.sliderContainer.setAttribute("class", "citrus-slider")
