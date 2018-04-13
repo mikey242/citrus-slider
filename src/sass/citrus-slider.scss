@@ -193,25 +193,14 @@
 .citrus-slider.transition-zoom-fade {
     .current-slide {
         z-index: 1;
-        opacity: 1;
     }
     &.forwards {
-        .next-slide {
-            opacity: 1;
-            z-index: 0;
-        }
         .prev-slide {
-            opacity: 1;
             animation: zoom-fade 1s forwards;
         }
     }
     &.backwards {
-        .next-slide {
-            opacity: 0;
-            z-index: 0;
-        }
         .prev-slide {
-            opacity: 1;
             z-index: 1;
         }
         .current-slide {
@@ -225,28 +214,22 @@
 .citrus-slider.transition-fallaway {
     .current-slide {
         z-index: 1;
-        opacity: 1;
     }
     &.forwards {
         .prev-slide {
-            opacity: 1;
             z-index: 2;
             transform-origin: top right;
             animation: fallaway 1s forwards;
         }
-        .current-slide {
-            z-index: 1;
-        }
     }
     &.backwards {
         .prev-slide {
-            opacity: 1;
             z-index: 1;
         }
         .current-slide {
             z-index: 2;
             transform-origin: top right;
-            animation: fallaway-reverse 1s backwards;
+            animation: fallaway-reverse 1s forwards;
         }
     }
 }
@@ -255,50 +238,29 @@
 .citrus-slider.transition-scope {
     .current-slide {
         z-index: 1;
-        opacity: 1;
     }
     &.forwards {
-        .next-slide {
-            opacity: 0;
-            z-index: 0;
-        }
         .prev-slide {
-            opacity: 1;
             z-index: 1;
         }
         .current-slide {
-            z-index: 2;
             animation: scope 1s forwards;
         }
     }
     &.backwards {
-        .next-slide {
-            opacity: 0;
-            z-index: 0;
-        }
         .prev-slide {
-            opacity: 1;
             z-index: 2;
             animation: scope-reverse 1s forwards;
-        }
-        .current-slide {
-            z-index: 1;
         }
     }
 }
 
 //SLIDE SLIDER
 .citrus-slider.transition-slide {
-    .next-slide {
-        opacity: 1;
-        z-index: 0;
-    }
     .current-slide {
         z-index: 1;
-        opacity: 1;
     }
     .prev-slide {
-        opacity: 1;
         z-index: 2;
         transition: transform 1s ease;
     }
@@ -314,7 +276,6 @@
 .citrus-slider.transition-fade {
     .current-slide {
         z-index: 1;
-        opacity: 1;
     }
     .prev-slide {
         opacity: 0;
