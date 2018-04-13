@@ -7,7 +7,9 @@
     &:hover .slide-arrow {
         opacity: 0.4;
     }
-    .slides, .slide-wrap, .slide {
+    .slides,
+    .slide-wrap,
+    .slide {
         width: 100%;
         height: 100%;
     }
@@ -33,7 +35,6 @@
         left: 50%;
         transform: translate(-50%, -50%);
         transition: all 0.4s ease;
-
     }
     .indicators {
         position: absolute;
@@ -71,7 +72,7 @@
             display: inline-block;
             position: relative;
             cursor: pointer;
-            &:not(:first-child){
+            &:not(:first-child) {
                 margin-left: 20px;
             }
             &:before {
@@ -140,10 +141,12 @@
 .citrus-slider.animate-text .slide-text {
     opacity: 0;
 }
+
 .citrus-slider.animate-text:not(.animating) .current-slide .slide-text,
 .citrus-slider.animate-text .prev-slide .slide-text {
     opacity: 1;
 }
+
 .citrus-slider.animate-text.animating .current-slide .slide-text {
     transform: translate(-50%, -60%);
 }
@@ -153,8 +156,8 @@
     .current-slide .slide {
         animation: background-zoom 16s forwards;
     }
-
 }
+
 .citrus-slider.effect-zoom.animating {
     .prev-slide .slide {
         animation: background-zoom 16s forwards;
@@ -166,8 +169,8 @@
     .current-slide .slide {
         animation: background-pan linear 16s forwards;
     }
-
 }
+
 .citrus-slider.effect-pan.animating {
     .prev-slide .slide {
         animation: background-pan linear 16s forwards;
@@ -218,6 +221,36 @@
     }
 }
 
+//FALLAWAY SLIDER
+.citrus-slider.transition-fallaway {
+    .current-slide {
+        z-index: 1;
+        opacity: 1;
+    }
+    &.forwards {
+        .prev-slide {
+            opacity: 1;
+            z-index: 2;
+            transform-origin: top right;
+            animation: fallaway 1s forwards;
+        }
+        .current-slide {
+            z-index: 1;
+        }
+    }
+    &.backwards {
+        .prev-slide {
+            opacity: 1;
+            z-index: 1;
+        }
+        .current-slide {
+            z-index: 2;
+            transform-origin: top right;
+            animation: fallaway-reverse 1s backwards;
+        }
+    }
+}
+
 //SCOPE SLIDER
 .citrus-slider.transition-scope {
     .current-slide {
@@ -233,7 +266,7 @@
             opacity: 1;
             z-index: 1;
         }
-        .current-slide  {
+        .current-slide {
             z-index: 2;
             animation: scope 1s forwards;
         }
@@ -293,24 +326,6 @@
     }
 }
 
-//FALLAWAY SLIDER
-.citrus-slider.transition-fallaway {
-    .next-slide {
-        opacity: 1;
-        z-index: 0;
-    }
-    .current-slide {
-        z-index: 1;
-        opacity: 1;
-    }
-    .prev-slide {
-        opacity: 1;
-        z-index: 2;
-        transform-origin: top right;
-        animation: fallaway 1s forwards;
-    }
-}
-
 // DOWN AND OUT SLIDER
 .citrus-slider.transition-downandout {
     .next-slide {
@@ -352,13 +367,13 @@
     }
     100% {
         transform: scale(1.2) rotate(0.001deg) translate(-5%, 5%);
-    }    
+    }
 }
 
 @keyframes background-zoom {
     100% {
         transform: scale(1.1) rotate(0.001deg);
-    }    
+    }
 }
 
 @keyframes zoom-fade-reverse {
@@ -395,8 +410,20 @@
 }
 
 @keyframes fallaway {
+    0% {
+        transform: translateY(0%) rotate(0deg) rotate(0.001deg);
+    }
     100% {
         transform: translateY(100%) rotate(-40deg) rotate(0.001deg);
+    }
+}
+
+@keyframes fallaway-reverse {
+    0% {
+        transform: translateY(100%) rotate(-40deg) rotate(0.001deg);
+    }
+    100% {
+        transform: translateY(0%) rotate(0deg) rotate(0.001deg);
     }
 }
 
