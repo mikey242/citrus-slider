@@ -52,13 +52,11 @@ var getSliders = (function () {
   for (var i = 0; i < sliders.length; i++) {
     sliderObjects[i] = new Slider(sliders[i])
     var e = sliderObjects[i]
-    getSettings(e)
-    sliderInit(e)
-    autoSlide(e)
+    getSettings(e, sliderInit)
   }
 
   // GET SETTINGS FROM DATA ATTRIBUTE
-  function getSettings(e) {
+  function getSettings(e, cb) {
     // get settings from data attribute
     if (e.sliderContainer.hasAttribute('data-citrus')) {
       var settings = JSON.parse(e.sliderContainer.dataset.citrus)
@@ -72,6 +70,9 @@ var getSliders = (function () {
       } else {
         e.settings.slideIndex--
       }
+    }
+    if (typeof cb === "function") {
+      cb(e)
     }
   }
 
@@ -123,6 +124,7 @@ var getSliders = (function () {
     if (e.settings.animateText) {
       e.sliderContainer.classList.add('animate-text')
     }
+    autoSlide(e)
     sliderConstruct(e)
   }
 
