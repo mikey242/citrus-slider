@@ -5,7 +5,7 @@ _/ ___\|  \   __\_  __ \  |  \/  ___/
 \  \___|  ||  |  |  | \/  |  /\___ \ 
  \___  >__||__|  |__|  |____//____  >
      \/                           \/ 
- Version: 1.0.5
+ Version: 1.0.6
   Author: Michael Iseard
  Website: https://citrus.iseardmedia.com
     Docs: https://gitea.iseardmedia.com/michael/citrus-Slider
@@ -295,8 +295,6 @@ var getSliders = (function () {
         e.sliderContainer.classList.add('backwards')
       }
 
-      e.sliderContainer.classList.add('animating')
-
       // add previous slide
       e.prev.classList.add('prev-slide')
 
@@ -316,10 +314,12 @@ var getSliders = (function () {
         e.sliderContainer.children[1].style.transform = 'translateX(-' + e.settings.slideIndex / e.num * 100 + '%)'
       }
 
+      // add and remove animating class to slider container
+      e.sliderContainer.classList.add('animating')
       e.intervalPrevAnim = setTimeout(function () {
         e.sliderContainer.classList.remove('animating')
       }, 1000)
-      // autoSlide(e)
+
       if (typeof cb === "function") {
         cb(e)
       }
