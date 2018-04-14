@@ -65,7 +65,7 @@ gulp.task('default', function () {
   gulp.watch("./*.html").on('change', browserSync.reload);
   gulp.watch(folder.src + 'img/*', ['image-app'])
   gulp.watch('demo/*', ['image-demo'])
-  gulp.watch(folder.src + 'sass/*.scss', ['sass-main'])
+  gulp.watch(folder.src + 'sass/**/*.scss', ['sass-main'])
   gulp.watch(folder.src + 'js/*.js', ['js-main'])
 })
 
