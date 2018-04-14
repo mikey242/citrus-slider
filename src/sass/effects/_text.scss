@@ -1,0 +1,13 @@
+//TEXT ANIMATION
+.citrus-slider.animate-text .slide-text {
+    opacity: 0;
+}
+
+.citrus-slider.animate-text:not(.animating) .current-slide .slide-text,
+.citrus-slider.animate-text .prev-slide .slide-text {
+    opacity: 1;
+}
+
+.citrus-slider.animate-text.animating .current-slide .slide-text {
+    transform: translate(-50%, -60%);
+}

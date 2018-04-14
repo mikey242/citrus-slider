@@ -1,0 +1,18 @@
+//ZOOM EFFECT
+.citrus-slider.effect-zoom {
+    .current-slide .slide {
+        animation: background-zoom 16s forwards;
+    }
+}
+
+.citrus-slider.effect-zoom.animating {
+    .prev-slide .slide {
+        animation: background-zoom 16s forwards;
+    }
+}
+
+@keyframes background-zoom {
+    100% {
+        transform: scale(1.1) rotate(0.001deg);
+    }
+}

@@ -1,0 +1,14 @@
+//FADE SLIDER
+.citrus-slider.transition-fade {
+    .current-slide {
+        z-index: 1;
+    }
+    .prev-slide {
+        opacity: 0;
+        z-index: 2;
+        transition: opacity 1s ease;
+    }
+    .slides {
+        position: absolute;
+    }
+}

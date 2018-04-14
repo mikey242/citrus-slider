@@ -1,0 +1,53 @@
+//ZOOM-FADE SLIDER
+.citrus-slider.transition-zoom-fade {
+    .current-slide {
+        z-index: 1;
+    }
+    &.forwards {
+        .prev-slide {
+            animation: zoom-fade 1s forwards;
+        }
+    }
+    &.backwards {
+        .prev-slide {
+            z-index: 1;
+        }
+        .current-slide {
+            z-index: 2;
+            animation: zoom-fade-reverse 1s forwards;
+        }
+    }
+}
+
+@keyframes zoom-fade {
+    0% {
+        transform: scale(1) rotate(0.001deg);
+        opacity: 2;
+        z-index: 2;
+    }
+    99% {
+        transform: scale(2) rotate(0.001deg);
+        opacity: 0;
+        z-index: 2;
+    }
+    100% {
+        transform: scale(2) rotate(0.001deg);
+        opacity: 0;
+        z-index: 0;
+    }
+}
+
+@keyframes zoom-fade-reverse {
+    0% {
+        transform: scale(2) rotate(0.001deg);
+        opacity: 0;
+    }
+    99% {
+        transform: scale(1) rotate(0.001deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1) rotate(0.001deg);
+        opacity: 1;
+    }
+}

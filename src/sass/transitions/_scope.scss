@@ -1,0 +1,38 @@
+//SCOPE SLIDER
+.citrus-slider.transition-scope {
+    .current-slide {
+        z-index: 1;
+    }
+    &.forwards {
+        .prev-slide {
+            z-index: 1;
+        }
+        .current-slide {
+            animation: scope 1s forwards;
+        }
+    }
+    &.backwards {
+        .prev-slide {
+            z-index: 2;
+            animation: scope-reverse 1s forwards;
+        }
+    }
+}
+
+@keyframes scope {
+    0% {
+        clip-path: circle(0% at 50% 50%);
+    }
+    100% {
+        clip-path: circle(100%);
+    }
+}
+
+@keyframes scope-reverse {
+    0% {
+        clip-path: circle(100%);
+    }
+    100% {
+        clip-path: circle(0% at 50% 50%);
+    }
+}

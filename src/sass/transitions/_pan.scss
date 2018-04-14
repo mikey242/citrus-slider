@@ -1,0 +1,11 @@
+//PAN SLIDER
+.citrus-slider.transition-pan {
+    .citrus-slides {
+        position: absolute;
+        display: flex;
+        transition: transform 1s ease;
+    }
+    .slide-wrap {
+        position: relative;
+    }
+}

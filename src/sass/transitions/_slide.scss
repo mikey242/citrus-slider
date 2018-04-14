@@ -1,0 +1,16 @@
+//SLIDE SLIDER
+.citrus-slider.transition-slide {
+    .current-slide {
+        z-index: 1;
+    }
+    .prev-slide {
+        z-index: 2;
+        transition: transform 1s ease;
+    }
+    &.forwards .prev-slide {
+        transform: translateX(-100%) rotate(0.001deg);
+    }
+    &.backwards .prev-slide {
+        transform: translateX(100%) rotate(0.001deg);
+    }
+}

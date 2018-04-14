@@ -1,0 +1,28 @@
+// DOWN AND OUT SLIDER
+.citrus-slider.transition-downandout {
+    .next-slide {
+        opacity: 1;
+        z-index: 0;
+    }
+    .current-slide {
+        z-index: 1;
+        opacity: 1;
+    }
+    .prev-slide {
+        opacity: 1;
+        z-index: 2;
+        animation: downandout 1s forwards;
+    }
+}
+
+@keyframes downandout {
+    0% {
+        transform: scale(1) rotate(0.001deg);
+    }
+    50% {
+        transform: scale(0.75) rotate(0.001deg);
+    }
+    100% {
+        transform: translateX(-100%) scale(0.75) rotate(0.001deg);
+    }
+}
