@@ -53,6 +53,7 @@ var getSliders = (function () {
     sliderObjects[i] = new Slider(sliders[i])
     var e = sliderObjects[i]
     getSettings(e, sliderInit)
+    autoSlide(e)
   }
 
   // GET SETTINGS FROM DATA ATTRIBUTE
@@ -124,7 +125,6 @@ var getSliders = (function () {
     if (e.settings.animateText) {
       e.sliderContainer.classList.add('animate-text')
     }
-    autoSlide(e)
     sliderConstruct(e)
   }
 
@@ -135,9 +135,9 @@ var getSliders = (function () {
     // create arrows
     var arrowContainer = document.createElement("DIV")
     if (e.settings.showArrows == false) {
-      arrowContainer.setAttribute("class", "arrows hidden")
+      arrowContainer.setAttribute("class", "citrus-arrows hidden")
     } else {
-      arrowContainer.setAttribute("class", "arrows")
+      arrowContainer.setAttribute("class", "citrus-arrows")
     }
     var arrowLeft = document.createElement("DIV")
     arrowLeft.setAttribute("class", "slide-arrow left-arrow")
@@ -151,7 +151,7 @@ var getSliders = (function () {
     // create slides
     var slides = document.createElement("DIV");
     e.slides = slides
-    slides.classList.add("slides")
+    slides.classList.add("citrus-slides")
     if (e.settings.slideTransition === "pan") {
       slides.style.width = e.num + '00%'
     }
@@ -187,9 +187,9 @@ var getSliders = (function () {
     e.indicators = {}
     var indicatorsContainer = document.createElement("DIV")
     if (e.settings.showIndicators == false) {
-      indicatorsContainer.setAttribute("class", "indicators hidden")
+      indicatorsContainer.setAttribute("class", "citrus-indicators hidden")
     } else {
-      indicatorsContainer.setAttribute("class", "indicators")
+      indicatorsContainer.setAttribute("class", "citrus-indicators")
     }
     for (let i = 0; i < e.num; i++) {
       var indicator = document.createElement("SPAN");
@@ -229,7 +229,7 @@ var getSliders = (function () {
         }
         updateIndex(e, num)
         clearTimeouts(e)
-        sliderChange(e)
+        sliderChange(e, autoSlide)
       })
     }
 
@@ -245,14 +245,14 @@ var getSliders = (function () {
         if (el.target.classList.contains('current-indicator') === false) {
           clearTimeouts(e)
           updateIndex(e, Number(el.target.dataset.slide))
-          sliderChange(e)
+          sliderChange(e, autoSlide)
         }
       })
     }
   }
 
   // UPDATES SLIDE CLASSES BASED ON PREVIOUS AND CURRENT INDEXES 
-  function sliderChange(e) {
+  function sliderChange(e, cb) {
     e.prev = e.sliderContainer.getElementsByClassName('current-slide')[0]
 
     // calculate slide index
@@ -319,7 +319,10 @@ var getSliders = (function () {
       e.intervalPrevAnim = setTimeout(function () {
         e.sliderContainer.classList.remove('animating')
       }, 1000)
-      autoSlide(e)
+      // autoSlide(e)
+      if (typeof cb === "function") {
+        cb(e)
+      }
     }
   }
 
@@ -329,13 +332,13 @@ var getSliders = (function () {
     e.settings.slideIndex = n
   }
 
-  // AUTOMATIC SLIDE TRANSITIONS BASED ON TIMING IN SETTINGS
+  // AUTOMATIC SLIDE CHANGING BASED ON TIMING IN SETTINGS
   function autoSlide(e) {
     if (e.settings.paused === false) {
       e.intervalSlideChange = setTimeout(function () {
         var num = e.settings.slideIndex + 1
         updateIndex(e, num)
-        sliderChange(e)
+        sliderChange(e, autoSlide)
       }, e.settings.slideDuration)
     }
   }
