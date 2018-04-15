@@ -26,21 +26,40 @@ var getSliders = (function () {
     this.imgUrls = getImages(el)
     this.settings = {
       // default settings
-      width: "100%",
-      height: "100%",
+      animateText: true,
+      animationDuration: 0.8,
       autoHeight: false,
+      autoPause: true,
       effect: true,
       effectType: 'zoom',
-      animateText: true,
-      showIndicators: true,
-      showArrows: true,
+      height: "100%",
       paused: false,
-      autoPause: true,
-      slideIndex: 0,
+      showArrows: true,
+      showIndicators: true,
       slideDuration: 5000,
-      slideTransition: "pan"
+      slideIndex: 0,
+      slideTransition: "pan",
+      width: "100%"
     }
-    // public function
+    // public functions
+    this.stop = function () {
+      clearTimeouts(this)
+    }
+    this.goToSlide = function (slide) {
+      this.settings.slideIndex = slide
+      clearTimeouts(this)
+      sliderChange(this)
+    }
+    this.prevSlide = function() {
+      this.settings.slideIndex--
+      clearTimeouts(this)
+      sliderChange(this)
+    }
+    this.nextSlide = function() {
+      this.settings.slideIndex++
+      clearTimeouts(this)
+      sliderChange(this)
+    }
     this.reset = function () {
       sliderInit(this)
       clearTimeouts(this)
@@ -167,6 +186,7 @@ var getSliders = (function () {
 
     for (let i = 0; i < e.num; i++) {
       slideFragment.slideWrap = document.createElement("DIV")
+      slideFragment.slideWrap.setAttribute("style", "animation-duration:" + e.settings.animationDuration + "s")
       if (i === e.settings.slideIndex) {
         slideFragment.slideWrap.setAttribute("class", "slide-wrap current-slide")
       } else {
@@ -229,7 +249,7 @@ var getSliders = (function () {
         }
         updateIndex(e, num)
         clearTimeouts(e)
-        sliderChange(e, autoSlide)
+        sliderChange(e)
       })
     }
 
@@ -245,14 +265,14 @@ var getSliders = (function () {
         if (el.target.classList.contains('current-indicator') === false) {
           clearTimeouts(e)
           updateIndex(e, Number(el.target.dataset.slide))
-          sliderChange(e, autoSlide)
+          sliderChange(e)
         }
       })
     }
   }
 
   // UPDATES SLIDE CLASSES BASED ON PREVIOUS AND CURRENT INDEXES 
-  function sliderChange(e, cb) {
+  function sliderChange(e) {
     e.prev = e.sliderContainer.getElementsByClassName('current-slide')[0]
 
     // calculate slide index
@@ -318,11 +338,8 @@ var getSliders = (function () {
       e.sliderContainer.classList.add('animating')
       e.intervalPrevAnim = setTimeout(function () {
         e.sliderContainer.classList.remove('animating')
-      }, 1000)
-
-      if (typeof cb === "function") {
-        cb(e)
-      }
+      }, e.settings.animationDuration * 1000)
+      autoSlide(e)
     }
   }
 
@@ -338,7 +355,7 @@ var getSliders = (function () {
       e.intervalSlideChange = setTimeout(function () {
         var num = e.settings.slideIndex + 1
         updateIndex(e, num)
-        sliderChange(e, autoSlide)
+        sliderChange(e)
       }, e.settings.slideDuration)
     }
   }
