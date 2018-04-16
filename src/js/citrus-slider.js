@@ -42,31 +42,25 @@ var getSliders = (function () {
         slideTransition: "pan",
         width: "100%"
       };
-      // public functions
-      this.stop = function () {
-        clearTimeouts(this);
-      };
-      this.goToSlide = function (slide) {
-        this.settings.slideIndex = slide;
-        clearTimeouts(this);
-        sliderChange(this);
-      };
-      this.prevSlide = function () {
-        this.settings.slideIndex--;
-        clearTimeouts(this);
-        sliderChange(this);
-      };
-      this.nextSlide = function () {
-        this.settings.slideIndex++;
-        clearTimeouts(this);
-        sliderChange(this);
-      };
-      this.reset = function () {
-        sliderInit(this);
-        clearTimeouts(this);
-        autoSlide(this);
-      };
     }
+  }
+  // public functions
+  Slider.prototype.goToSlide = function (slide) {
+    this.settings.slideIndex = slide;
+    sliderChange(this);
+  }
+  Slider.prototype.stop = function () {}
+  Slider.prototype.prevSlide = function () {
+    this.settings.slideIndex--;
+    sliderChange(this);
+  }
+  Slider.prototype.nextSlide = function () {
+    this.settings.slideIndex++;
+    sliderChange(this);
+  }
+  Slider.prototype.reset = function () {
+    sliderInit(this);
+    autoSlide(this);
   }
 
   let sliders = document.getElementsByClassName('citrus-slider')
@@ -76,8 +70,6 @@ var getSliders = (function () {
     getSettings(e, sliderInit)
     autoSlide(e)
   }
-
-  console.log(sliderObjects[0].reset() === sliderObjects[1].reset())
 
   // GET SETTINGS FROM DATA ATTRIBUTE
   function getSettings(e, cb) {
@@ -245,14 +237,12 @@ var getSliders = (function () {
         if (e.sliderContainer.classList.contains("animating")) {
           return;
         }
-        e.prevSlideIndex = e.settings.slideIndex
+        e.settings.prevIndex = e.settings.slideIndex
         if (el.target.classList.contains('left-arrow')) {
-          var num = e.settings.slideIndex - 1
+          e.settings.slideIndex--
         } else if (el.target.classList.contains('right-arrow')) {
-          var num = e.settings.slideIndex + 1
+          e.settings.slideIndex++
         }
-        updateIndex(e, num)
-        clearTimeouts(e)
         sliderChange(e)
       })
     }
@@ -267,8 +257,9 @@ var getSliders = (function () {
           return;
         }
         if (el.target.classList.contains('current-indicator') === false) {
-          clearTimeouts(e)
-          updateIndex(e, Number(el.target.dataset.slide))
+          e.settings.prevIndex = e.settings.slideIndex
+          e.settings.slideIndex = Number(el.target.dataset.slide)
+
           sliderChange(e)
         }
       })
@@ -277,29 +268,26 @@ var getSliders = (function () {
 
   // UPDATES SLIDE CLASSES BASED ON PREVIOUS AND CURRENT INDEXES 
   function sliderChange(e) {
-    e.prev = e.sliderContainer.getElementsByClassName('current-slide')[0]
+    clearTimeout(e.intervalSlideChange)
+    e.prevSlide = e.sliderContainer.getElementsByClassName('current-slide')[0]
 
     // calculate slide index
     if (e.settings.slideIndex < 0) {
       e.settings.slideIndex = e.num - 1
       if (e.num) {
         e.indicators[0].parentElement.classList.add('transition-last')
-      }
-      setTimeout(function () {
-        if (e.num) {
+        setTimeout(function () {
           e.indicators[0].parentElement.classList.remove('transition-last')
-        }
-      }, 1000)
+        }, 1000)
+      }
     } else if (e.settings.slideIndex > e.num - 1) {
       e.settings.slideIndex = 0
       if (e.num) {
         e.indicators[0].parentElement.classList.add('transition-first')
-      }
-      setTimeout(function () {
-        if (e.num) {
+        setTimeout(function () {
           e.indicators[0].parentElement.classList.remove('transition-first')
-        }
-      }, 1000)
+        }, 1000)
+      }
     }
 
     // set classes based on slide index
@@ -313,14 +301,14 @@ var getSliders = (function () {
         }
       }
       // add direction class
-      if (e.prevSlideIndex < e.settings.slideIndex) {
+      if (e.settings.prevIndex < e.settings.slideIndex) {
         e.sliderContainer.classList.add('forwards')
       } else {
         e.sliderContainer.classList.add('backwards')
       }
 
       // add previous slide
-      e.prev.classList.add('prev-slide')
+      e.prevSlide.classList.add('prev-slide')
 
       if (e.settings.slideIndex === e.num - 1) {
         e.slides.children[0].classList.add('next-slide')
@@ -347,29 +335,13 @@ var getSliders = (function () {
     }
   }
 
-  // UPDATE CURRENT AND PREVIOUS INDEX
-  function updateIndex(e, n) {
-    e.prevSlideIndex = e.settings.slideIndex
-    e.settings.slideIndex = n
-  }
-
   // AUTOMATIC SLIDE CHANGING BASED ON TIMING IN SETTINGS
   function autoSlide(e) {
     if (e.settings.paused === false) {
       e.intervalSlideChange = setTimeout(function () {
-        var num = e.settings.slideIndex + 1
-        updateIndex(e, num)
-        sliderChange(e)
+        e.settings.slideIndex++
+          sliderChange(e)
       }, e.settings.slideDuration)
-    }
-  }
-
-  // CLEAR TIMEOUTS USED FOR AUTOSLIDE
-  function clearTimeouts(e) {
-    clearTimeout(e.intervalSlideChange)
-    clearTimeout(e.intervalPrevAnim)
-    for (var i = 0; i < e.num; i++) {
-      e.sliderContainer.classList.remove('animating')
     }
   }
 
