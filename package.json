@@ -10,6 +10,7 @@
     "gulp-autoprefixer": "^5.0.0",
     "gulp-check-unused-css": "^2.1.4",
     "gulp-clean-css": "^3.9.3",
+    "gulp-environments": "^0.1.2",
     "gulp-image": "^4.3.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^4.0.1",
@@ -18,7 +19,8 @@
     "pump": "^3.0.0"
   },
   "scripts": {
-    "gulp": "gulp"
+    "build": "gulp --env production",
+    "watch": "gulp watch --env development"
   },
   "author": "Michael Iseard",
   "license": "ISC"
