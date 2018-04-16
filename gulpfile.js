@@ -1,4 +1,5 @@
 var gulp = require('gulp')
+var environments = require('gulp-environments')
 var pump = require('pump')
 var image = require('gulp-image');
 var sass = require('gulp-sass')
@@ -9,13 +10,14 @@ var browserSync = require('browser-sync').create()
 var cleanCSS = require('gulp-clean-css')
 var rename = require("gulp-rename")
 
+var development = environments.development;
+var production = environments.production;
+
 // folders
 let folder = {
   src: 'src/',
   dist: 'dist/',
   test: 'test/',
-  maps: '../map/'
-  
 }
 
 function imageTask(src, dest, cb) {
@@ -29,48 +31,49 @@ function imageTask(src, dest, cb) {
 
 function sassTask(src, dest, cb) {
   pump([
-    gulp.src(src),
-    sourcemaps.init(),
-    sass(),
-    autoprefixer({
-      browsers: ['last 2 versions', '> 5%', 'Firefox ESR']
-    }),
-    cleanCSS(),
-    rename('citrus-slider.min.css'),
-    sourcemaps.write(folder.maps),
-    gulp.dest(dest),
-    browserSync.stream()
-  ],
-  cb
-);
+      gulp.src(src),
+      development(sourcemaps.init()),
+      sass(),
+      autoprefixer({
+        browsers: ['last 2 versions']
+      }),
+      cleanCSS(),
+      rename('citrus-slider.min.css'),
+      development(sourcemaps.write()),
+      gulp.dest(dest),
+      browserSync.stream()
+    ],
+    cb
+  );
 }
 
 function jsTask(src, dest, cb) {
   pump([
-    gulp.src(src),
-    sourcemaps.init(),
-    uglify(),
-    rename('citrus-slider.min.js'),
-    sourcemaps.write(folder.maps),
-    gulp.dest(dest)
-  ],
-  cb
-);
+      gulp.src(src),
+      development(sourcemaps.init()),
+      uglify(),
+      rename('citrus-slider.min.js'),
+      development(sourcemaps.write()),
+      gulp.dest(dest),
+      browserSync.stream()
+    ],
+    cb
+  );
 }
 
-gulp.task('default', function () {
+gulp.task('default', ['build'])
+
+gulp.task('build', ['sass-main', 'js-main'])
+
+gulp.task('watch', function () {
   browserSync.init({
     server: "./"
   });
   gulp.watch("./*.html").on('change', browserSync.reload);
   gulp.watch(folder.src + 'img/*', ['image-app'])
   gulp.watch('demo/*', ['image-demo'])
-  gulp.watch(folder.src + 'sass/**/*.scss', ['sass-main'])
+  gulp.watch(folder.src + 'scss/**/*.scss', ['sass-main'])
   gulp.watch(folder.src + 'js/*.js', ['js-main'])
-})
-
-gulp.task('image-app', function (cb) {
-  imageTask(folder.src + 'img/*', folder.dist + 'img/', cb)
 })
 
 gulp.task('image-demo', function (cb) {
@@ -78,7 +81,7 @@ gulp.task('image-demo', function (cb) {
 })
 
 gulp.task('sass-main', function (cb) {
-  sassTask(folder.src + 'sass/*.scss', folder.dist + 'css/', cb)
+  sassTask(folder.src + 'scss/*.scss', folder.dist + 'css/', cb)
 })
 
 gulp.task('js-main', function (cb) {
