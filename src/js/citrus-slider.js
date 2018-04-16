@@ -19,51 +19,53 @@ var getSliders = (function () {
 
   var sliderObjects = []
 
-  var Slider = function (el) {
-    this.sliderContainer = el
-    this.slideText = getContent(el.children)
-    this.num = el.children.length
-    this.imgUrls = getImages(el)
-    this.settings = {
-      // default settings
-      animateText: true,
-      animationDuration: 0.8,
-      autoHeight: false,
-      autoPause: true,
-      effect: true,
-      effectType: 'zoom',
-      height: "100%",
-      paused: false,
-      showArrows: true,
-      showIndicators: true,
-      slideDuration: 5000,
-      slideIndex: 0,
-      slideTransition: "pan",
-      width: "100%"
-    }
-    // public functions
-    this.stop = function () {
-      clearTimeouts(this)
-    }
-    this.goToSlide = function (slide) {
-      this.settings.slideIndex = slide
-      clearTimeouts(this)
-      sliderChange(this)
-    }
-    this.prevSlide = function() {
-      this.settings.slideIndex--
-      clearTimeouts(this)
-      sliderChange(this)
-    }
-    this.nextSlide = function() {
-      this.settings.slideIndex++
-      clearTimeouts(this)
-      sliderChange(this)
-    }
-    this.reset = function () {
-      sliderInit(this)
-      clearTimeouts(this)
-      autoSlide(this)
+  class Slider {
+    constructor(el) {
+      this.sliderContainer = el;
+      this.slideText = getContent(el.children);
+      this.num = el.children.length;
+      this.imgUrls = getImages(el);
+      this.settings = {
+        // default settings
+        animateText: true,
+        animationDuration: 0.8,
+        autoHeight: false,
+        autoPause: true,
+        effect: true,
+        effectType: 'zoom',
+        height: "100%",
+        paused: false,
+        showArrows: true,
+        showIndicators: true,
+        slideDuration: 5000,
+        slideIndex: 0,
+        slideTransition: "pan",
+        width: "100%"
+      };
+      // public functions
+      this.stop = function () {
+        clearTimeouts(this);
+      };
+      this.goToSlide = function (slide) {
+        this.settings.slideIndex = slide;
+        clearTimeouts(this);
+        sliderChange(this);
+      };
+      this.prevSlide = function () {
+        this.settings.slideIndex--;
+        clearTimeouts(this);
+        sliderChange(this);
+      };
+      this.nextSlide = function () {
+        this.settings.slideIndex++;
+        clearTimeouts(this);
+        sliderChange(this);
+      };
+      this.reset = function () {
+        sliderInit(this);
+        clearTimeouts(this);
+        autoSlide(this);
+      };
     }
   }
 
@@ -74,6 +76,8 @@ var getSliders = (function () {
     getSettings(e, sliderInit)
     autoSlide(e)
   }
+
+  console.log(sliderObjects[0].reset() === sliderObjects[1].reset())
 
   // GET SETTINGS FROM DATA ATTRIBUTE
   function getSettings(e, cb) {
