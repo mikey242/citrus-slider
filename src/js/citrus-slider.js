@@ -64,9 +64,9 @@ const getSliders = (function () {
   }
 
   let sliders = document.getElementsByClassName('citrus-slider')
-  for (var i = 0; i < sliders.length; i++) {
+  for (let i = 0; i < sliders.length; i++) {
     sliderObjects[i] = new Slider(sliders[i])
-    var e = sliderObjects[i]
+    let e = sliderObjects[i]
     getSettings(e, sliderInit)
     autoSlide(e)
   }
@@ -75,7 +75,7 @@ const getSliders = (function () {
   function getSettings(e, cb) {
     // get settings from data attribute
     if (e.sliderContainer.hasAttribute('data-citrus')) {
-      var settings = JSON.parse(e.sliderContainer.dataset.citrus)
+      let settings = JSON.parse(e.sliderContainer.dataset.citrus)
       // update object
       for (const key of Object.keys(settings)) {
         e.settings[key] = settings[key]
@@ -94,7 +94,7 @@ const getSliders = (function () {
 
   // GET SLIDES INNER CONTENT
   function getContent(el) {
-    var slideText = {}
+    let slideText = {}
     for (let n = 0; n < el.length; n++) {
       slideText[n] = el[n]
     }
@@ -103,8 +103,8 @@ const getSliders = (function () {
 
   // GET IMAGE URLS FROM SLIDES
   function getImages(el) {
-    var urls = Array.from(el.children).map(function (e, i) {
-      var src = e.getElementsByTagName('img')[0].src
+    let urls = Array.from(el.children).map(function (e, i) {
+      let src = e.getElementsByTagName('img')[0].src
       e.getElementsByTagName('img')[0].remove()
       return src
     })
@@ -113,7 +113,7 @@ const getSliders = (function () {
 
   // CALCULATE HEIGHT OF GIVEN SLIDER ELEMENT
   function autoHeight(e) {
-    var height = 0
+    let height = 0
     for (let i = 0; i < e.num; i++) {
       let textHeight = e.slideText[i].offsetHeight
       if (height < textHeight) {
@@ -126,7 +126,7 @@ const getSliders = (function () {
 
   // SETS CLASSES AND SIZE SLIDER CONTAINER
   function sliderInit(e) {
-    var height = e.settings.height
+    let height = e.settings.height
     if (e.settings.autoHeight === true) {
       height = autoHeight(e)
     }
@@ -145,18 +145,18 @@ const getSliders = (function () {
 
   // CONSTRUCT DOM ELEMENTS
   function sliderConstruct(e) {
-    var fragment = document.createDocumentFragment();
+    let fragment = document.createDocumentFragment();
 
     // create arrows
-    var arrowContainer = document.createElement("DIV")
+    let arrowContainer = document.createElement("DIV")
     if (e.settings.showArrows == false) {
       arrowContainer.setAttribute("class", "citrus-arrows hidden")
     } else {
       arrowContainer.setAttribute("class", "citrus-arrows")
     }
-    var arrowLeft = document.createElement("DIV")
+    let arrowLeft = document.createElement("DIV")
     arrowLeft.setAttribute("class", "slide-arrow left-arrow")
-    var arrowRight = document.createElement("DIV")
+    let arrowRight = document.createElement("DIV")
     arrowRight.setAttribute("class", "slide-arrow right-arrow")
     arrowContainer.appendChild(arrowLeft)
     arrowContainer.appendChild(arrowRight)
@@ -164,7 +164,7 @@ const getSliders = (function () {
     e.arrows = [arrowLeft, arrowRight]
 
     // create slides
-    var slides = document.createElement("DIV");
+    let slides = document.createElement("DIV");
     e.slides = slides
     slides.classList.add("citrus-slides")
     if (e.settings.slideTransition === "pan") {
@@ -176,7 +176,7 @@ const getSliders = (function () {
       slides.style.transform = 'translateX(-' + e.settings.slideIndex / e.num * 100 + '%)'
     }
 
-    var slideFragment = {}
+    let slideFragment = {}
     slideFragment.slide = null
     slideFragment.slideWrap = null
 
@@ -201,14 +201,14 @@ const getSliders = (function () {
 
     // create indicator elements
     e.indicators = {}
-    var indicatorsContainer = document.createElement("DIV")
+    let indicatorsContainer = document.createElement("DIV")
     if (e.settings.showIndicators == false) {
       indicatorsContainer.setAttribute("class", "citrus-indicators hidden")
     } else {
       indicatorsContainer.setAttribute("class", "citrus-indicators")
     }
     for (let i = 0; i < e.num; i++) {
-      var indicator = document.createElement("SPAN");
+      let indicator = document.createElement("SPAN");
       if (i === e.settings.slideIndex) {
         indicator.setAttribute("class", "slide-indicator current-indicator")
       } else {
@@ -229,7 +229,7 @@ const getSliders = (function () {
   function setBindings(e) {
 
     // bind arrow click functions
-    for (var i = 0; i < e.arrows.length; i++) {
+    for (let i = 0; i < e.arrows.length; i++) {
       e.arrows[i].addEventListener('click', function (el) {
         if (e.settings.autoPause) {
           e.settings.paused = true
@@ -248,7 +248,7 @@ const getSliders = (function () {
     }
 
     // bind indicator click functions
-    for (i = 0; i < e.num; i++) {
+    for (let i = 0; i < e.num; i++) {
       e.indicators[i].addEventListener('click', function (el) {
         if (e.settings.autoPause) {
           e.settings.paused = true
@@ -294,7 +294,7 @@ const getSliders = (function () {
     if (e.num > 1) {
       // remove current styles
       e.sliderContainer.classList.remove('forwards', 'backwards')
-      for (var i = 0; i < e.num; i++) {
+      for (let i = 0; i < e.num; i++) {
         e.slides.children[i].classList.remove('current-slide', 'prev-slide', 'next-slide')
         if (e.num) {
           e.indicators[i].classList.remove('current-indicator')
