@@ -8,10 +8,10 @@ var autoprefixer = require('gulp-autoprefixer')
 var browserSync = require('browser-sync').create()
 var cleanCSS = require('gulp-clean-css')
 var rename = require("gulp-rename")
-var babel = require('gulp-babel');
+var babel = require('gulp-babel')
 
-var development = environments.development;
-var production = environments.production;
+var development = environments.development
+var production = environments.production
 
 // paths
 let path = {
