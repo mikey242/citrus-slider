@@ -66,7 +66,7 @@ gulp.task('js-main', function () {
     .pipe(browserSync.stream())
 })
 
-gulp.task('build', gulp.parallel('sass-main', 'js-main'))
+gulp.task('default', gulp.parallel('sass-main', 'js-main'))
 
 gulp.task('watch:js', function () {
   gulp.watch(path.src.js).on('change', gulp.series('js-main'))
@@ -81,7 +81,3 @@ gulp.task('watch:html', function () {
 })
 
 gulp.task('watch', gulp.parallel('watch:js', 'watch:scss', 'watch:html', 'serve'))
-
-gulp.task('default', gulp.series('build', function (done) {
-  done()
-}))
