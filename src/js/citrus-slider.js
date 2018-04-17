@@ -17,7 +17,7 @@ _/ ___\|  \   __\_  __ \  |  \/  ___/
 // CREATE SLIDER OBJECTS
 const getSliders = (function () {
 
-  var sliderObjects = []
+  const sliderObjects = []
 
   class Slider {
     constructor(el) {
@@ -93,21 +93,21 @@ const getSliders = (function () {
   }
 
   // GET SLIDES INNER CONTENT
-  function getContent(el) {
+  function getContent(e) {
     let slideText = {}
-    for (let n = 0; n < el.length; n++) {
-      slideText[n] = el[n]
+    for (let n = 0; n < e.length; n++) {
+      slideText[n] = e[n]
     }
     return slideText
   }
 
   // GET IMAGE URLS FROM SLIDES
-  function getImages(el) {
-    let urls = Array.from(el.children).map(function (e, i) {
-      let src = e.getElementsByTagName('img')[0].src
-      e.getElementsByTagName('img')[0].remove()
-      return src
-    })
+  function getImages(e) {
+    let urls = Array.from(e.children).map(e => e.getElementsByTagName('img')[0].src)
+    let img = e.getElementsByTagName("img")
+    while (img[0]) {
+      img[0].remove()
+    }
     return urls
   }
 
