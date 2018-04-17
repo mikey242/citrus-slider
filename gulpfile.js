@@ -1,6 +1,5 @@
 var gulp = require('gulp')
 var environments = require('gulp-environments')
-var pump = require('pump')
 var image = require('gulp-image');
 var sass = require('gulp-sass')
 var uglify = require('gulp-uglify-es').default;
@@ -9,81 +8,80 @@ var autoprefixer = require('gulp-autoprefixer')
 var browserSync = require('browser-sync').create()
 var cleanCSS = require('gulp-clean-css')
 var rename = require("gulp-rename")
+var babel = require('gulp-babel');
 
 var development = environments.development;
 var production = environments.production;
 
-// folders
-let folder = {
-  src: 'src/',
-  dist: 'dist/',
+// paths
+let path = {
+  src: {
+    js: 'src/js/**/*.js',
+    scss: 'src/scss/**/*.scss',
+  },
+  dist: {
+    js: 'dist/js',
+    css: 'dist/css',
+  },
   test: 'test/',
 }
 
-function imageTask(src, dest, cb) {
-  pump([
-    gulp.src(src),
-    image(),
-    gulp.dest(dest),
-    browserSync.stream()
-  ], cb)
-}
-
-function sassTask(src, dest, cb) {
-  pump([
-      gulp.src(src),
-      development(sourcemaps.init()),
-      sass(),
-      autoprefixer({
-        browsers: ['last 2 versions']
-      }),
-      cleanCSS(),
-      rename('citrus-slider.min.css'),
-      development(sourcemaps.write()),
-      gulp.dest(dest),
-      browserSync.stream()
-    ],
-    cb
-  );
-}
-
-function jsTask(src, dest, cb) {
-  pump([
-      gulp.src(src),
-      development(sourcemaps.init()),
-      uglify(),
-      rename('citrus-slider.min.js'),
-      development(sourcemaps.write()),
-      gulp.dest(dest),
-      browserSync.stream()
-    ],
-    cb
-  );
-}
-
-gulp.task('default', ['build'])
-
-gulp.task('build', ['sass-main', 'js-main'])
-
-gulp.task('watch', function () {
+gulp.task('serve', function () {
   browserSync.init({
     server: "./"
-  });
-  gulp.watch("./*.html").on('change', browserSync.reload);
-  gulp.watch(folder.src + 'img/*', ['image-app'])
-  gulp.watch('demo/*', ['image-demo'])
-  gulp.watch(folder.src + 'scss/**/*.scss', ['sass-main'])
-  gulp.watch(folder.src + 'js/*.js', ['js-main'])
+  })
 })
 
-gulp.task('image-demo', function (cb) {
-  imageTask(folder.test + '/' + folder.src + '/img/*', folder.test + '/' + folder.dist + '/img', cb)
+gulp.task('image-demo', function () {
+  return gulp.src(path.test + '/' + path.src + '/img/*')
+    .pipe(image())
+    .pipe(gulp.dest(path.test + '/' + path.dist + '/img'))
+    .pipe(browserSync.stream())
 })
 
-gulp.task('sass-main', function (cb) {
-  sassTask(folder.src + 'scss/*.scss', folder.dist + 'css/', cb)
+gulp.task('sass-main', function () {
+  return gulp.src(path.src.scss)
+    .pipe(development(sourcemaps.init()))
+    .pipe(sass())
+    .pipe(autoprefixer({
+      browsers: ['last 2 versions']
+    }))
+    .pipe(cleanCSS())
+    .pipe(rename('citrus-slider.min.css'))
+    .pipe(development(sourcemaps.write()))
+    .pipe(gulp.dest(path.dist.css))
+    .pipe(browserSync.stream())
 })
 
-gulp.task('js-main', function (cb) {
-  jsTask(folder.src + 'js/*.js', folder.dist + 'js/', cb)
+gulp.task('js-main', function () {
+  return gulp.src(path.src.js)
+    .pipe(development(sourcemaps.init()))
+    .pipe(babel({
+      presets: ['env']
+    }))
+    .pipe(uglify())
+    .pipe(rename('citrus-slider.min.js'))
+    .pipe(development(sourcemaps.write()))
+    .pipe(gulp.dest(path.dist.js))
+    .pipe(browserSync.stream())
 })
+
+gulp.task('build', gulp.parallel('sass-main', 'js-main'))
+
+gulp.task('watch:js', function () {
+  gulp.watch(path.src.js).on('change', gulp.series('js-main'))
+})
+
+gulp.task('watch:scss', function () {
+  gulp.watch(path.src.scss).on('change', gulp.series('sass-main'))
+})
+
+gulp.task('watch:html', function () {
+  gulp.watch("./*.html").on('change', browserSync.reload)
+})
+
+gulp.task('watch', gulp.parallel('watch:js', 'watch:scss', 'watch:html', 'serve'))
+
+gulp.task('default', gulp.series('build', function (done) {
+  done()
+}))

@@ -5,9 +5,12 @@
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "browser-sync": "^2.23.6",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-autoprefixer": "^5.0.0",
+    "gulp-babel": "^7.0.1",
     "gulp-check-unused-css": "^2.1.4",
     "gulp-clean-css": "^3.9.3",
     "gulp-environments": "^0.1.2",
@@ -15,8 +18,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^4.0.1",
     "gulp-sourcemaps": "^2.6.4",
-    "gulp-uglify-es": "^1.0.1",
-    "pump": "^3.0.0"
+    "gulp-uglify-es": "^1.0.1"
   },
   "scripts": {
     "build": "gulp --env production",
