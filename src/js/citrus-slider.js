@@ -49,7 +49,14 @@ const getSliders = (function () {
     this.settings.slideIndex = slide;
     sliderChange(this);
   }
-  Slider.prototype.stop = function () {}
+  Slider.prototype.stop = function () {
+    this.settings.paused = true
+    clearTimeout(this.intervalSlideChange)
+  }
+  Slider.prototype.play = function () {
+    this.settings.paused = false
+    autoSlide(this);
+  }
   Slider.prototype.prevSlide = function () {
     this.settings.slideIndex--;
     sliderChange(this);
@@ -69,59 +76,6 @@ const getSliders = (function () {
     let e = sliderObjects[i]
     getSettings(e, sliderInit)
     autoSlide(e)
-  }
-
-  // GET SETTINGS FROM DATA ATTRIBUTE
-  function getSettings(e, cb) {
-    // get settings from data attribute
-    if (e.sliderContainer.hasAttribute('data-citrus')) {
-      let settings = JSON.parse(e.sliderContainer.dataset.citrus)
-      // update object
-      for (const key of Object.keys(settings)) {
-        e.settings[key] = settings[key]
-      }
-      e.sliderContainer.removeAttribute('data-citrus')
-      if (e.settings.slideIndex > e.num || e.settings.slideIndex <= 0) {
-        e.settings.slideIndex = 0;
-      } else {
-        e.settings.slideIndex--
-      }
-    }
-    if (typeof cb === "function") {
-      cb(e)
-    }
-  }
-
-  // GET SLIDES INNER CONTENT
-  function getContent(e) {
-    let slideText = {}
-    for (let n = 0; n < e.length; n++) {
-      slideText[n] = e[n]
-    }
-    return slideText
-  }
-
-  // GET IMAGE URLS FROM SLIDES
-  function getImages(e) {
-    let urls = Array.from(e.children).map(e => e.getElementsByTagName('img')[0].src)
-    let img = e.getElementsByTagName("img")
-    while (img[0]) {
-      img[0].remove()
-    }
-    return urls
-  }
-
-  // CALCULATE HEIGHT OF GIVEN SLIDER ELEMENT
-  function autoHeight(e) {
-    let height = 0
-    for (let i = 0; i < e.num; i++) {
-      let textHeight = e.slideText[i].offsetHeight
-      if (height < textHeight) {
-        height = textHeight
-      }
-    }
-    height += 250
-    return height + "px"
   }
 
   // SETS CLASSES AND SIZE SLIDER CONTAINER
@@ -259,7 +213,6 @@ const getSliders = (function () {
         if (el.target.classList.contains('current-indicator') === false) {
           e.settings.prevIndex = e.settings.slideIndex
           e.settings.slideIndex = Number(el.target.dataset.slide)
-
           sliderChange(e)
         }
       })
@@ -269,7 +222,7 @@ const getSliders = (function () {
   // UPDATES SLIDE CLASSES BASED ON PREVIOUS AND CURRENT INDEXES 
   function sliderChange(e) {
     clearTimeout(e.intervalSlideChange)
-    e.prevSlide = e.sliderContainer.getElementsByClassName('current-slide')[0]
+    e.prev = e.sliderContainer.getElementsByClassName('current-slide')[0]
 
     // calculate slide index
     if (e.settings.slideIndex < 0) {
@@ -308,7 +261,7 @@ const getSliders = (function () {
       }
 
       // add previous slide
-      e.prevSlide.classList.add('prev-slide')
+      e.prev.classList.add('prev-slide')
 
       if (e.settings.slideIndex === e.num - 1) {
         e.slides.children[0].classList.add('next-slide')
@@ -339,9 +292,65 @@ const getSliders = (function () {
   function autoSlide(e) {
     if (e.settings.paused === false) {
       e.intervalSlideChange = setTimeout(function () {
+        e.settings.prevIndex = e.settings.slideIndex
         e.settings.slideIndex++
           sliderChange(e)
       }, e.settings.slideDuration)
+    }
+  }
+
+  // HELPER FUNCTIONS
+
+  // GET SLIDES INNER CONTENT
+  function getContent(e) {
+    let slideText = {}
+    for (let n = 0; n < e.length; n++) {
+      slideText[n] = e[n]
+    }
+    return slideText
+  }
+
+  // GET IMAGE URLS FROM SLIDES
+  function getImages(e) {
+    let urls = Array.from(e.children).map(e => e.getElementsByTagName('img')[0].src)
+    let img = e.getElementsByTagName("img")
+    while (img[0]) {
+      img[0].remove()
+    }
+    return urls
+  }
+
+  // CALCULATE HEIGHT OF GIVEN SLIDER ELEMENT
+  function autoHeight(e) {
+    let height = 0
+    for (let i = 0; i < e.num; i++) {
+      let textHeight = e.slideText[i].offsetHeight
+      if (height < textHeight) {
+        height = textHeight
+      }
+    }
+    height += 250
+    return height + "px"
+  }
+
+  // GET SETTINGS FROM DATA ATTRIBUTE
+  function getSettings(e, cb) {
+    // get settings from data attribute
+    if (e.sliderContainer.hasAttribute('data-citrus')) {
+      let settings = JSON.parse(e.sliderContainer.dataset.citrus)
+      // update object
+      for (const key of Object.keys(settings)) {
+        e.settings[key] = settings[key]
+      }
+      e.sliderContainer.removeAttribute('data-citrus')
+      if (e.settings.slideIndex > e.num || e.settings.slideIndex <= 0) {
+        e.settings.slideIndex = 0;
+      } else {
+        e.settings.slideIndex--
+      }
+    }
+    if (typeof cb === "function") {
+      cb(e)
     }
   }
 
