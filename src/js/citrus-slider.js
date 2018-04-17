@@ -15,7 +15,7 @@ _/ ___\|  \   __\_  __ \  |  \/  ___/
 "use strict"
 
 // CREATE SLIDER OBJECTS
-var getSliders = (function () {
+const getSliders = (function () {
 
   var sliderObjects = []
 
