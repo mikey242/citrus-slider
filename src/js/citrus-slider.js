@@ -72,13 +72,13 @@ const getSliders = (function () {
   }
 
   // CREATE INDIVIDUAL SLIDER OBJECTS FROM CONSTRUCTOR
-  let sliders = document.getElementsByClassName('citrus-slider')
-  for (let i = 0; i < sliders.length; i++) {
+  let sliders = Array.from(document.getElementsByClassName('citrus-slider'))
+  sliders.forEach(function(slider,i) {
     sliderObjects[i] = new Slider(sliders[i])
     let e = sliderObjects[i]
     getSettings(e, sliderInit)
     autoSlide(e)
-  }
+  })
 
   // SETS CLASSES AND SIZE SLIDER CONTAINER
   function sliderInit(e) {
@@ -152,7 +152,7 @@ const getSliders = (function () {
     fragment.appendChild(slidesContainer)
 
     // create indicator elements
-    e.indicators = {}
+    e.indicators = []
     let indicatorsContainer = document.createElement("DIV")
     if (e.settings.showIndicators == false) {
       indicatorsContainer.setAttribute("class", "citrus-indicators hidden")
@@ -182,8 +182,8 @@ const getSliders = (function () {
   function setBindings(e) {
 
     // bind arrow click functions
-    for (let i = 0; i < e.arrows.length; i++) {
-      e.arrows[i].addEventListener('click', function (el) {
+    for (let arrow of e.arrows) {
+     arrow.addEventListener('click', function (el) {
         if (e.settings.autoPause) {
           e.settings.paused = true
         }
@@ -201,8 +201,8 @@ const getSliders = (function () {
     }
 
     // bind indicator click functions
-    for (let i = 0; i < e.num; i++) {
-      e.indicators[i].addEventListener('click', function (el) {
+    for (let indicator of e.indicators) {
+      indicator.addEventListener('click', function (el) {
         if (e.settings.autoPause) {
           e.settings.paused = true
         }
@@ -303,8 +303,8 @@ const getSliders = (function () {
   // GET SLIDES INNER CONTENT
   function getContent(e) {
     let slideText = {}
-    for (let n = 0; n < e.length; n++) {
-      slideText[n] = e[n]
+    for (let i = 0; i < e.length; i++) {
+      slideText[i] = e[i]
     }
     return slideText
   }
