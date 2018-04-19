@@ -15,7 +15,7 @@ _/ ___\|  \   __\_  __ \  |  \/  ___/
 "use strict"
 
 // CREATE SLIDER OBJECTS
-const getSliders = (function () {
+const citrus = (function () {
 
   const sliderObjects = []
 
@@ -67,6 +67,7 @@ const getSliders = (function () {
     sliderChange(this);
   }
   Slider.prototype.reset = function () {
+    clearTimeout(this.intervalSlideChange)
     sliderInit(this);
     autoSlide(this);
   }
@@ -353,6 +354,6 @@ const getSliders = (function () {
     }
   }
 
-  // MAKE SLIDEROBJECTS PUBLIC VIA GETSLIDERS
+  // MAKE SLIDEROBJECTS PUBLIC VIA citrusSliders
   return sliderObjects
 })()
