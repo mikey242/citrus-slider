@@ -44,7 +44,8 @@ const getSliders = (function () {
       };
     }
   }
-  // public functions
+
+  // OBJECT PUBLIC FUNCTIONS
   Slider.prototype.goToSlide = function (slide) {
     this.settings.slideIndex = slide;
     sliderChange(this);
@@ -70,6 +71,7 @@ const getSliders = (function () {
     autoSlide(this);
   }
 
+  // CREATE INDIVIDUAL SLIDER OBJECTS FROM CONSTRUCTOR
   let sliders = document.getElementsByClassName('citrus-slider')
   for (let i = 0; i < sliders.length; i++) {
     sliderObjects[i] = new Slider(sliders[i])
@@ -102,56 +104,52 @@ const getSliders = (function () {
     let fragment = document.createDocumentFragment();
 
     // create arrows
-    let arrowContainer = document.createElement("DIV")
+    let arrowsContainer = document.createElement("DIV")
     if (e.settings.showArrows == false) {
-      arrowContainer.setAttribute("class", "citrus-arrows hidden")
+      arrowsContainer.setAttribute("class", "citrus-arrows hidden")
     } else {
-      arrowContainer.setAttribute("class", "citrus-arrows")
+      arrowsContainer.setAttribute("class", "citrus-arrows")
     }
     let arrowLeft = document.createElement("DIV")
     arrowLeft.setAttribute("class", "slide-arrow left-arrow")
     let arrowRight = document.createElement("DIV")
     arrowRight.setAttribute("class", "slide-arrow right-arrow")
-    arrowContainer.appendChild(arrowLeft)
-    arrowContainer.appendChild(arrowRight)
-    fragment.appendChild(arrowContainer)
+    arrowsContainer.appendChild(arrowLeft)
+    arrowsContainer.appendChild(arrowRight)
+    fragment.appendChild(arrowsContainer)
     e.arrows = [arrowLeft, arrowRight]
 
     // create slides
-    let slides = document.createElement("DIV");
-    e.slides = slides
-    slides.classList.add("citrus-slides")
+    let slidesContainer = document.createElement("DIV")
+    e.slides = slidesContainer
+    slidesContainer.setAttribute("class", "citrus-slides")
     if (e.settings.slideTransition === "pan") {
-      slides.style.width = e.num + '00%'
+      slidesContainer.style.width = e.num + '00%'
     }
     // set container width
     if (e.settings.slideTransition === "pan") {
-      slides.style.width = e.num + '00%'
-      slides.style.transform = 'translateX(-' + e.settings.slideIndex / e.num * 100 + '%)'
+      slidesContainer.style.width = e.num + '00%'
+      slidesContainer.style.transform = 'translateX(-' + e.settings.slideIndex / e.num * 100 + '%)'
     }
-
-    let slideFragment = {}
-    slideFragment.slide = null
-    slideFragment.slideWrap = null
 
     for (let i = 0; i < e.num; i++) {
-      slideFragment.slideWrap = document.createElement("DIV")
-      slideFragment.slideWrap.setAttribute("style", "animation-duration:" + e.settings.animationDuration + "s")
+      let slideWrap = document.createElement("DIV")
+      slideWrap.setAttribute("style", "animation-duration:" + e.settings.animationDuration + "s")
       if (i === e.settings.slideIndex) {
-        slideFragment.slideWrap.setAttribute("class", "slide-wrap current-slide")
+        slideWrap.setAttribute("class", "slide-wrap current-slide")
       } else {
-        slideFragment.slideWrap.setAttribute("class", "slide-wrap")
+        slideWrap.setAttribute("class", "slide-wrap")
       }
-      slideFragment.slide = document.createElement("DIV")
-      slideFragment.slide.setAttribute("class", "slide")
-      slideFragment.slideText = e.slideText[i]
-      slideFragment.slideText.setAttribute("class", "slide-text")
-      slideFragment.slide.style.backgroundImage = "url(" + e.imgUrls[i] + ")"
-      slideFragment.slideWrap.appendChild(slideFragment.slide)
-      slideFragment.slideWrap.appendChild(slideFragment.slideText)
-      slides.appendChild(slideFragment.slideWrap)
+      let slide = document.createElement("DIV")
+      slide.setAttribute("class", "slide")
+      let slideText = e.slideText[i]
+      slideText.setAttribute("class", "slide-text")
+      slide.style.backgroundImage = "url(" + e.imgUrls[i] + ")"
+      slideWrap.appendChild(slide)
+      slideWrap.appendChild(slideText)
+      slidesContainer.appendChild(slideWrap)
     }
-    fragment.appendChild(slides)
+    fragment.appendChild(slidesContainer)
 
     // create indicator elements
     e.indicators = {}
@@ -174,6 +172,7 @@ const getSliders = (function () {
       e.indicators[i] = indicator
     }
 
+    // clear innerHTML of original slides container and append fragment
     e.sliderContainer.innerHTML = ""
     e.sliderContainer.appendChild(fragment)
     setBindings(e)
