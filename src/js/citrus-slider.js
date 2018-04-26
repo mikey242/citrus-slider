@@ -124,6 +124,7 @@ const citrus = (function () {
     let slidesContainer = document.createElement("DIV")
     e.slides = slidesContainer
     slidesContainer.setAttribute("class", "citrus-slides")
+    slidesContainer.setAttribute("style", "animation-duration:" + e.settings.animationDuration + "s;" + "transition-duration:" + e.settings.animationDuration + "s;")
     if (e.settings.slideTransition === "pan") {
       slidesContainer.style.width = e.num + '00%'
     }
@@ -135,7 +136,6 @@ const citrus = (function () {
 
     for (let i = 0; i < e.num; i++) {
       let slideWrap = document.createElement("DIV")
-      slideWrap.setAttribute("style", "animation-duration:" + e.settings.animationDuration + "s")
       if (i === e.settings.slideIndex) {
         slideWrap.setAttribute("class", "slide-wrap current-slide")
       } else {
