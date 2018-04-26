@@ -5,7 +5,8 @@
     }
     &.forwards {
         .prev-slide {
-            animation: zoom-fade 1s forwards;
+            animation-name: zoom-fade;
+            animation-fill-mode: forwards;
         }
     }
     &.backwards {
@@ -14,7 +15,8 @@
         }
         .current-slide {
             z-index: 2;
-            animation: zoom-fade-reverse 1s forwards;
+            animation-name: zoom-fade-reverse;
+            animation-fill-mode: forwards;
         }
     }
 }

@@ -8,13 +8,15 @@
             z-index: 1;
         }
         .current-slide {
-            animation: scope 1s forwards;
+            animation-name: scope;
+            animation-fill-mode: forwards;
         }
     }
     &.backwards {
         .prev-slide {
             z-index: 2;
-            animation: scope-reverse 1s forwards;
+            animation-name: scope-reverse;
+            animation-fill-mode: forwards;
         }
     }
 }

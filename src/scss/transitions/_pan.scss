@@ -3,7 +3,8 @@
     .citrus-slides {
         position: absolute;
         display: flex;
-        transition: transform 1s ease;
+        transition-property: transform;
+        transition-timing-function: ease;
     }
     .slide-wrap {
         position: relative;

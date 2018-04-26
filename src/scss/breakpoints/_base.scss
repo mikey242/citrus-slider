@@ -21,6 +21,7 @@
     .slide-wrap {
         position: absolute;
         overflow: hidden;
+        animation-duration: inherit;
     }
     .slide {
         background-size: cover;

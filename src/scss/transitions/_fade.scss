@@ -4,11 +4,22 @@
         z-index: 1;
     }
     .prev-slide {
-        opacity: 0;
-        z-index: 2;
-        transition: opacity 1s ease;
+        animation-name: fade;
+        animation-fill-mode: forwards;
     }
-    .slides {
-        position: absolute;
+}
+
+@keyframes fade {
+    0% {
+        z-index: 2;
+        opacity: 100%;
+    }
+    99% {
+        z-index: 2;
+        opacity: 0%;
+    }
+    100% {
+        opacity: 0%;
+        z-index: 0;
     }
 }

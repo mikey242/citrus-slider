@@ -3,14 +3,43 @@
     .current-slide {
         z-index: 1;
     }
-    .prev-slide {
-        z-index: 2;
-        transition: transform 1s ease;
-    }
     &.forwards .prev-slide {
-        transform: translateX(-100%) rotate(0.001deg);
+        animation-name: slide-left;
+        animation-fill-mode: forwards;
     }
     &.backwards .prev-slide {
+        animation-name: slide-right;
+        animation-fill-mode: forwards;
+    }
+}
+
+@keyframes slide-left {
+    0% {
+        z-index: 2;
+        transform: translateX(0%) rotate(0.001deg);
+    }
+    99% {
+        opacity: 1;
+        z-index: 2;
+        transform: translateX(-100%) rotate(0.001deg);
+    }
+    100% {
+        z-index: 0;
+        transform: translateX(-100%) rotate(0.001deg);
+    }
+}
+
+@keyframes slide-right {
+    0% {
+        z-index: 2;
+        transform: translateX(0%) rotate(0.001deg);
+    }
+    99% {
+        z-index: 2;
         transform: translateX(100%) rotate(0.001deg);
+    }
+    100% {
+        z-index: 0;
+        transform: translateX (100%) rotate(0.001deg);
     }
 }
