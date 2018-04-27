@@ -49,11 +49,13 @@
                     Transition
                 </button>
                 <div class="dropdown-menu" aria-labelledby="transitionButton">
-                    <a class="dropdown-item" data-settings='{"slideTransition": "pan"}' href="#">Pan</a>
-                    <a class="dropdown-item" data-settings='{"slideTransition": "zoom-fade"}' href="#">Zoom-fade</a>
-                    <a class="dropdown-item" data-settings='{"slideTransition": "fallaway"}' href="#">Fallaway</a>
-                    <a class="dropdown-item" data-settings='{"slideTransition": "scope"}' href="#">Scope</a>
                     <a class="dropdown-item" data-settings='{"slideTransition": "downandout"}' href="#">Downandout</a>
+                    <a class="dropdown-item" data-settings='{"slideTransition": "fade"}' href="#">Fade</a>
+                    <a class="dropdown-item" data-settings='{"slideTransition": "fallaway"}' href="#">Fallaway</a>
+                    <a class="dropdown-item" data-settings='{"slideTransition": "pan"}' href="#">Pan</a>
+                    <a class="dropdown-item" data-settings='{"slideTransition": "scope"}' href="#">Scope</a>
+                    <a class="dropdown-item" data-settings='{"slideTransition": "slide"}' href="#">Slide</a>
+                    <a class="dropdown-item" data-settings='{"slideTransition": "zoom-fade"}' href="#">Zoom-fade</a>
                 </div>
             </div>
             <div class="btn-group">
@@ -118,7 +120,7 @@
             </div>
         </div>
         <br>
-        <div class="citrus-slider" data-citrus='{"autoHeight": true, "height" : "100%" , "animateText" : true, "effect" : "zoom", "showIndicators" : true, "showArrows" : true, "paused" : false, "autoPause" : true, "slideIndex" : 1, "slideDuration" : 3000, "slideTransition" : "zoom-fade"}'>
+        <!-- <div class="citrus-slider" data-citrus='{"autoHeight": true, "height" : "100%" , "animateText" : true, "effect" : "zoom", "showIndicators" : true, "showArrows" : true, "paused" : false, "autoPause" : true, "slideIndex" : 1, "slideDuration" : 3000, "slideTransition" : "zoom-fade"}'>
             <div>
                 <img src="test/dist/img/1.png">
                 <h2>Slide 1</h2>
@@ -139,7 +141,7 @@
                 <h2>Slide 4</h2>
                 <p>Some sample text.</p>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -154,7 +156,7 @@
     <script src="dist/js/citrus-slider.min.js?v=1.0.41"></script>
     <script>
         var settings = document.getElementById("demo-settings").querySelectorAll(".dropdown-item")
-        var slider = getSliders[0].settings
+        var slider = citrus[0].settings
         for (let i = 0; i < settings.length; i++) {
             settings[i].addEventListener('click', function (e) {
                 e.preventDefault()
@@ -162,7 +164,7 @@
                 for (const key of Object.keys(update)) {
                     slider[key] = update[key]
                 }
-                getSliders[0].reset()
+                citrus[0].reset()
             })
         }
     </script>
