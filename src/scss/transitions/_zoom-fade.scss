@@ -23,17 +23,17 @@
 
 @keyframes zoom-fade {
     0% {
-        transform: scale(1) rotate(0.001deg);
+        transform: scale(1) translateZ(0);
         opacity: 2;
         z-index: 2;
     }
     99% {
-        transform: scale(2) rotate(0.001deg);
+        transform: scale(2) translateZ(0);
         opacity: 0;
         z-index: 2;
     }
     100% {
-        transform: scale(2) rotate(0.001deg);
+        transform: scale(2) translateZ(0);
         opacity: 0;
         z-index: 0;
     }
@@ -41,15 +41,15 @@
 
 @keyframes zoom-fade-reverse {
     0% {
-        transform: scale(2) rotate(0.001deg);
+        transform: scale(2) translateZ(0);
         opacity: 0;
     }
     99% {
-        transform: scale(1) rotate(0.001deg);
+        transform: scale(1) translateZ(0);
         opacity: 1;
     }
     100% {
-        transform: scale(1) rotate(0.001deg);
+        transform: scale(1) translateZ(0);
         opacity: 1;
     }
 }
