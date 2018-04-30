@@ -5,7 +5,7 @@ _/ ___\|  \   __\_  __ \  |  \/  ___/
 \  \___|  ||  |  |  | \/  |  /\___ \ 
  \___  >__||__|  |__|  |____//____  >
      \/                           \/ 
- Version: 1.0.6
+ Version: 1.0.7
   Author: Michael Iseard
  Website: https://citrus.iseardmedia.com
     Docs: https://gitea.iseardmedia.com/michael/citrus-Slider
@@ -21,18 +21,17 @@ const citrus = (function () {
 
   class Slider {
     constructor(el) {
-      this.sliderContainer = el;
-      this.slideText = getContent(el.children);
-      this.num = el.children.length;
-      this.imgUrls = getImages(el);
+      this.sliderContainer = el
+      this.slideText = getContent(el.children)
+      this.num = el.children.length
+      this.imgUrls = getImages(el)
       this.settings = {
         // default settings
         animateText: true,
         animationDuration: 0.8,
         autoHeight: false,
         autoPause: true,
-        effect: true,
-        effectType: 'zoom',
+        effect: false,
         height: "100%",
         paused: false,
         showArrows: true,
@@ -41,14 +40,14 @@ const citrus = (function () {
         slideIndex: 0,
         slideTransition: "pan",
         width: "100%"
-      };
+      }
     }
   }
 
   // OBJECT PUBLIC FUNCTIONS
   Slider.prototype.goToSlide = function (slide) {
-    this.settings.slideIndex = slide;
-    sliderChange(this);
+    this.settings.slideIndex = slide
+    sliderChange(this)
   }
   Slider.prototype.stop = function () {
     this.settings.paused = true
@@ -56,25 +55,25 @@ const citrus = (function () {
   }
   Slider.prototype.play = function () {
     this.settings.paused = false
-    autoSlide(this);
+    autoSlide(this)
   }
   Slider.prototype.prevSlide = function () {
-    this.settings.slideIndex--;
-    sliderChange(this);
+    this.settings.slideIndex--
+    sliderChange(this)
   }
   Slider.prototype.nextSlide = function () {
-    this.settings.slideIndex++;
-    sliderChange(this);
+    this.settings.slideIndex++
+    sliderChange(this)
   }
   Slider.prototype.reset = function () {
     clearTimeout(this.intervalSlideChange)
-    sliderInit(this);
-    autoSlide(this);
+    sliderInit(this)
+    autoSlide(this)
   }
 
   // CREATE INDIVIDUAL SLIDER OBJECTS FROM CONSTRUCTOR
   let sliders = Array.from(document.getElementsByClassName('citrus-slider'))
-  sliders.forEach(function(slider,i) {
+  sliders.forEach(function (slider, i) {
     sliderObjects[i] = new Slider(sliders[i])
     let e = sliderObjects[i]
     getSettings(e, sliderInit)
@@ -92,17 +91,20 @@ const citrus = (function () {
     // set container classes
     e.sliderContainer.classList.add("transition-" + e.settings.slideTransition)
     if (e.settings.effect) {
-      e.sliderContainer.classList.add("effect-" + e.settings.effectType)
+      e.sliderContainer.classList.add("effect-" + e.settings.effect)
     }
     if (e.settings.animateText) {
       e.sliderContainer.classList.add('animate-text')
+    }
+    if (e.settings.effect === "parallax") {
+      parallaxEffect(e)
     }
     sliderConstruct(e)
   }
 
   // CONSTRUCT DOM ELEMENTS
   function sliderConstruct(e) {
-    let fragment = document.createDocumentFragment();
+    let fragment = document.createDocumentFragment()
 
     // create arrows
     let arrowsContainer = document.createElement("DIV")
@@ -161,7 +163,7 @@ const citrus = (function () {
       indicatorsContainer.setAttribute("class", "citrus-indicators")
     }
     for (let i = 0; i < e.num; i++) {
-      let indicator = document.createElement("SPAN");
+      let indicator = document.createElement("SPAN")
       if (i === e.settings.slideIndex) {
         indicator.setAttribute("class", "slide-indicator current-indicator")
       } else {
@@ -184,12 +186,12 @@ const citrus = (function () {
 
     // bind arrow click functions
     for (let arrow of e.arrows) {
-     arrow.addEventListener('click', function (el) {
+      arrow.addEventListener('click', function (el) {
         if (e.settings.autoPause) {
           e.settings.paused = true
         }
         if (e.sliderContainer.classList.contains("animating")) {
-          return;
+          return
         }
         e.settings.prevIndex = e.settings.slideIndex
         if (el.target.classList.contains('left-arrow')) {
@@ -208,7 +210,7 @@ const citrus = (function () {
           e.settings.paused = true
         }
         if (e.sliderContainer.classList.contains("animating")) {
-          return;
+          return
         }
         if (el.target.classList.contains('current-indicator') === false) {
           e.settings.prevIndex = e.settings.slideIndex
@@ -299,7 +301,23 @@ const citrus = (function () {
     }
   }
 
-  // HELPER FUNCTIONS
+  // PARALLAX EFFECT
+  function parallaxEffect(e) {
+    let sliderHeight = e.sliderContainer.offsetHeight
+    let windowHeight = window.innerHeight
+    window.addEventListener('scroll', function () {
+      if (e.settings.effect === "parallax") {
+        if (isScrolledIntoView(e.sliderContainer, true, 0)) {
+          let offset = (e.sliderContainer.getBoundingClientRect().top / windowHeight) * (sliderHeight * 0.3)
+          for (let i = 0; i < e.num; i++) {
+            e.slides.children[i].children[0].style.backgroundPosition = 'center calc(50% - ' + (offset) + 'px)'
+          }
+        }
+      }
+    })
+  }
+
+  // ----------HELPER FUNCTIONS----------\\
 
   // GET SLIDES INNER CONTENT
   function getContent(e) {
@@ -344,7 +362,7 @@ const citrus = (function () {
       }
       e.sliderContainer.removeAttribute('data-citrus')
       if (e.settings.slideIndex > e.num || e.settings.slideIndex <= 0) {
-        e.settings.slideIndex = 0;
+        e.settings.slideIndex = 0
       } else {
         e.settings.slideIndex--
       }
@@ -352,6 +370,21 @@ const citrus = (function () {
     if (typeof cb === "function") {
       cb(e)
     }
+  }
+
+  // CHECK IF SLIDER IN VIEW
+  function isScrolledIntoView(el, isPartial, offset) {
+    var isVisible
+    var elemTop = el.getBoundingClientRect().top + offset
+    var elemBottom = el.getBoundingClientRect().bottom - offset
+    // Only completely visible elements return true:
+    if (isPartial === true) {
+      // Partially visible elements return true:
+      isVisible = elemTop < window.innerHeight && elemBottom >= 0
+    } else {
+      isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight)
+    }
+    return isVisible
   }
 
   // MAKE SLIDEROBJECTS PUBLIC VIA citrusSliders
