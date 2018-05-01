@@ -59,11 +59,11 @@ const citrus = (function () {
   }
   Slider.prototype.prevSlide = function () {
     this.settings.slideIndex--
-    sliderChange(this)
+      sliderChange(this)
   }
   Slider.prototype.nextSlide = function () {
     this.settings.slideIndex++
-    sliderChange(this)
+      sliderChange(this)
   }
   Slider.prototype.reset = function () {
     window.removeEventListener('scroll', updatePosition)
@@ -307,7 +307,9 @@ const citrus = (function () {
   function parallaxEffect(e) {
     updatePosition(e)
     window.addEventListener('scroll', function () {
-      updatePosition(e)
+      if (e.settings.effect === "parallax") {
+        updatePosition(e)
+      }
     })
   }
 
