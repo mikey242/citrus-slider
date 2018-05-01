@@ -66,6 +66,7 @@ const citrus = (function () {
     sliderChange(this)
   }
   Slider.prototype.reset = function () {
+    window.removeEventListener('scroll', updatePosition)
     clearTimeout(this.intervalSlideChange)
     sliderInit(this)
     autoSlide(this)
@@ -87,6 +88,7 @@ const citrus = (function () {
       height = autoHeight(e)
     }
     e.sliderContainer.setAttribute("style", "width:" + e.settings.width + "; height:" + height)
+    e.sliderHeight = e.sliderContainer.offsetHeight
     e.sliderContainer.setAttribute("class", "citrus-slider")
     // set container classes
     e.sliderContainer.classList.add("transition-" + e.settings.slideTransition)
@@ -95,9 +97,6 @@ const citrus = (function () {
     }
     if (e.settings.animateText) {
       e.sliderContainer.classList.add('animate-text')
-    }
-    if (e.settings.effect === "parallax") {
-      parallaxEffect(e)
     }
     sliderConstruct(e)
   }
@@ -178,6 +177,9 @@ const citrus = (function () {
     // clear innerHTML of original slides container and append fragment
     e.sliderContainer.innerHTML = ""
     e.sliderContainer.appendChild(fragment)
+    if (e.settings.effect === "parallax") {
+      parallaxEffect(e)
+    }
     setBindings(e)
   }
 
@@ -303,18 +305,20 @@ const citrus = (function () {
 
   // PARALLAX EFFECT
   function parallaxEffect(e) {
-    let sliderHeight = e.sliderContainer.offsetHeight
-    let windowHeight = window.innerHeight
+    updatePosition(e)
     window.addEventListener('scroll', function () {
-      if (e.settings.effect === "parallax") {
-        if (isScrolledIntoView(e.sliderContainer, true, 0)) {
-          let offset = (e.sliderContainer.getBoundingClientRect().top / windowHeight) * (sliderHeight * 0.3)
-          for (let i = 0; i < e.num; i++) {
-            e.slides.children[i].children[0].style.backgroundPosition = 'center calc(50% - ' + (offset) + 'px)'
-          }
-        }
-      }
+      updatePosition(e)
     })
+  }
+
+  function updatePosition(e) {
+    let windowHeight = window.innerHeight
+    if (isScrolledIntoView(e.sliderContainer, true, 0)) {
+      let offset = (e.sliderContainer.getBoundingClientRect().top / windowHeight) * (e.sliderHeight * 0.3)
+      for (let i = 0; i < e.num; i++) {
+        e.slides.children[i].children[0].style.backgroundPosition = 'center calc(50% - ' + (offset) + 'px)'
+      }
+    }
   }
 
   // ----------HELPER FUNCTIONS----------\\
