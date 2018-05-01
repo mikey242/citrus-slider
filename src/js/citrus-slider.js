@@ -313,6 +313,9 @@ const citrus = (function () {
     })
   }
 
+  // ----------HELPER FUNCTIONS----------\\
+
+  // UPDATE POSITION OF IMAGE FOR PARALLAX EFFECT
   function updatePosition(e) {
     let windowHeight = window.innerHeight
     if (isScrolledIntoView(e.sliderContainer, true, 0)) {
@@ -322,9 +325,7 @@ const citrus = (function () {
       }
     }
   }
-
-  // ----------HELPER FUNCTIONS----------\\
-
+  
   // GET SLIDES INNER CONTENT
   function getContent(e) {
     let slideText = {}
