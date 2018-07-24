@@ -7,7 +7,7 @@
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
-    "browser-sync": "^2.24.4",
+    "browser-sync": "^2.24.6",
     "gulp": "^4.0.0",
     "gulp-autoprefixer": "^5.0.0",
     "gulp-babel": "^7.0.1",
@@ -15,10 +15,10 @@
     "gulp-clean-css": "^3.9.4",
     "gulp-environments": "^0.1.2",
     "gulp-image": "^4.3.0",
-    "gulp-rename": "^1.2.3",
+    "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.1",
     "gulp-sourcemaps": "^2.6.4",
-    "gulp-uglify-es": "^1.0.1"
+    "gulp-uglify-es": "^1.0.4"
   },
   "scripts": {
     "build": "gulp --env production",
