@@ -5,6 +5,7 @@
         display: flex;
         transition-property: transform;
         transition-timing-function: ease;
+        will-change: transform;
     }
     .slide-wrap {
         position: relative;

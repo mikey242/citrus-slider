@@ -6,6 +6,7 @@
     .prev-slide {
         animation-name: fade;
         animation-fill-mode: forwards;
+        will-change: opacity;
     }
 }
 

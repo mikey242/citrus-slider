@@ -10,6 +10,7 @@
         .current-slide {
             animation-name: scope;
             animation-fill-mode: forwards;
+            will-change: clip-path;
         }
     }
     &.backwards {
@@ -17,6 +18,7 @@
             z-index: 2;
             animation-name: scope-reverse;
             animation-fill-mode: forwards;
+            will-change: clip-path;
         }
     }
 }
