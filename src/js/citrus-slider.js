@@ -132,7 +132,7 @@ const citrus = (function () {
     // set container width
     if (e.settings.slideTransition === "pan") {
       slidesContainer.style.width = e.num + '00%'
-      slidesContainer.style.transform = 'translateX(-' + e.settings.slideIndex / e.num * 100 + '%)'
+      slidesContainer.style.transform = 'translateZ(0) translateX(-' + e.settings.slideIndex / e.num * 100 + '%)'
     }
 
     for (let i = 0; i < e.num; i++) {
@@ -321,7 +321,7 @@ const citrus = (function () {
     if (isScrolledIntoView(e.sliderContainer, true, 0)) {
       let offset = (e.sliderContainer.getBoundingClientRect().top / windowHeight) * (e.sliderHeight * 0.3)
       for (let i = 0; i < e.num; i++) {
-        e.slides.children[i].children[0].style.backgroundPosition = 'center calc(50% - ' + (offset) + 'px)'
+        e.slides.children[i].children[0].style.transform = 'translate3d(0px, 0px, 0px) scale(1.3) translateY( ' + (-offset) + 'px )'
       }
     }
   }
