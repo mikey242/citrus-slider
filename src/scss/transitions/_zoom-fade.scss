@@ -23,17 +23,17 @@
 
 @keyframes zoom-fade {
     0% {
-        transform: scale(1) translateZ(0);
+        transform: translateZ(0) scale(1);
         opacity: 2;
         z-index: 2;
     }
     99% {
-        transform: scale(2) translateZ(0);
+        transform: translateZ(0) scale(2);
         opacity: 0;
         z-index: 2;
     }
     100% {
-        transform: scale(2) translateZ(0);
+        transform: translateZ(0) scale(2);
         opacity: 0;
         z-index: 0;
     }
