@@ -4,6 +4,7 @@
 This is a simple JavaScript and CSS based slider. There are no third party requirements such as jQuery.
 
 - [Citrus Slider](#citrus-slider)
+    - [Demo](#demo)
     - [Installation](#installation)
         - [Include required files](#include-required-files)
         - [Add markup](#add-markup)
@@ -11,6 +12,9 @@ This is a simple JavaScript and CSS based slider. There are no third party requi
         - [Customize settings](#customize-settings)
     - [Settings](#settings)
     - [Methods](#methods)
+
+## Demo
+You can see it in action by going [here](https://citrus.iseardmedia.com)
 
 ## Installation
 
