@@ -1,4 +1,4 @@
-![alt text](https://citrus.iseardmedia.com/img/og.png?v2.0.0 "Citrus Slider")
+![alt text](https://citrus.iseardmedia.com/img/citrus.png?v1.0 "Citrus Slider")
 # Citrus Slider
 
 This is a simple JavaScript and CSS based slider. There are no third party requirements such as jQuery.
