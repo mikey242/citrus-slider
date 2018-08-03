@@ -3,6 +3,14 @@
 
 This is a simple JavaScript and CSS based slider. There are no third party requirements such as jQuery.
 
+- [Citrus Slider](#citrus-slider)
+    - [Installation](#installation)
+        - [Include required files](#include-required-files)
+        - [Add markup](#add-markup)
+        - [Add desired content](#add-desired-content)
+        - [Customize settings](#customize-settings)
+    - [Settings](#settings)
+    - [Methods](#methods)
 
 ## Installation
 
