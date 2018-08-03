@@ -5,11 +5,11 @@ _/ ___\|  \   __\_  __ \  |  \/  ___/
 \  \___|  ||  |  |  | \/  |  /\___ \ 
  \___  >__||__|  |__|  |____//____  >
      \/                           \/ 
- Version: 1.0.0
+ Version: 1.0.1
   Author: Michael Iseard
  Website: https://citrus.iseardmedia.com
-    Docs: https://gitea.iseardmedia.com/michael/citrus-Slider
-    Repo: https://gitea.iseardmedia.com/michael/citrus-Slider
+    Docs: https://github.com/mikey242/citrus-slider
+    Repo: https://github.com/mikey242/citrus-slider
  */
 
 "use strict"
