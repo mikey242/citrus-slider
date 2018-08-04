@@ -1,24 +1,22 @@
 ![alt text](https://citrus.iseardmedia.com/img/citrus.png?v1.0 "Citrus Slider")
-# Citrus Slider
 
-This is a simple JavaScript and CSS based slider. There are no third party requirements such as jQuery.
+Citrus Slider is a simple JavaScript and CSS based slider. There are no third party requirements such as jQuery.
 
-- [Citrus Slider](#citrus-slider)
-    - [Demo](#demo)
-    - [Installation](#installation)
-        - [Include required files](#include-required-files)
-        - [Add markup](#add-markup)
-        - [Add desired content](#add-desired-content)
-        - [Customize settings](#customize-settings)
-    - [Settings](#settings)
-    - [Methods](#methods)
+- [Demo](#demo)
+- [Installation](#installation)
+    - [Include required files](#include-required-files)
+    - [Add markup](#add-markup)
+    - [Add desired content](#add-desired-content)
+    - [Customize settings](#customize-settings)
+- [Settings](#settings)
+- [Methods](#methods)
 
-## Demo
+# Demo
 You can see it in action by going [here](https://citrus.iseardmedia.com)
 
-## Installation
+# Installation
 
-### Include required files
+## Include required files
 
 Include citrus-slider in your project by adding these two lines before the end of the head tag.
                 
@@ -26,7 +24,7 @@ Include citrus-slider in your project by adding these two lines before the end o
 <link rel="stylesheet" href="css/citrus-slider.min.css">
 <script src="js/citrus-slider.min.js"></script>
 ```
-### Add markup
+## Add markup
 
 A simple container `<div>`, with each child `<div>` as a separate slide. The first `<img>` tag will be used as the slide background image.
 
@@ -38,7 +36,7 @@ A simple container `<div>`, with each child `<div>` as a separate slide. The fir
     <div><img src="img/slide-3.jpg"></div>
 </div>
 ```
-### Add desired content
+## Add desired content
 
 This can include even include other images. Remember that the first image will be used as the slide background.
            
@@ -50,7 +48,7 @@ This can include even include other images. Remember that the first image will b
 </div>
 ```             
             
-### Customize settings
+## Customize settings
 
 Add data-citrus followed by a JSON string of the settings you would like to change.
            
@@ -61,7 +59,7 @@ Add data-citrus followed by a JSON string of the settings you would like to chan
     <div><img src="img/slide-3.jpg"></div>
 </div>
 ```             
-## Settings
+# Settings
 
 | Key | Value | Default | Description |
 |-----|-------|---------|-------------| 
@@ -79,7 +77,7 @@ showArrows | true, false | true | Enable or disable slide arrows
 paused | true, false | false | Enable or disable automatic, timed slide transition
 autoPause |	true, false | true | Enable or disable automatic pausing (e.g. when user interacts with slider)
 
-## Methods
+# Methods
 
 Invoking `citrus` will return a slider object with various methods. This will allow you to programmatically control the slider. For example, to reset the slider you would use `citrus[0].reset()`. The `[0]` represents the index of the slider. If you have more than one slider on a page you will need to change this to the slider you intend to target.
 
